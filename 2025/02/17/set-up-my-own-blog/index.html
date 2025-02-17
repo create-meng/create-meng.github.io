@@ -13,7 +13,7 @@
 
 
 
-<title>set up my own blog 搭建自己的博客 | Hexo</title>
+<title>set up my own blog 搭建自己的博客 | minghao&#39;s blog -Hexo</title>
 
 
 
@@ -214,7 +214,7 @@
         </header>
 
         <div class="post-content">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ok呀，今天来写一下搭建博客的曲折历程，包括安装&amp;bug教程</p>
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ok呀，今天来写一下搭建博客和绑定域名的曲折历程，包括安装&amp;bug教程&amp;绑定域名</p>
 <ul>
 <li>csdn参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43883917/article/details/143885553?spm=1001.2014.3001.5506">参考的搭建教程</a></li>
 <li>bilibili参考：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Eg41157tL?vd_source=caadc39979d45e601baf7f481a31727e">参考的B站教程</a></li>
@@ -239,6 +239,7 @@
 </ol>
 <h3 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git -v</span><br><span class="line">node -v</span><br></pre></td></tr></table></figure>
 <p>如图，显示版本号即安装成功<br><img src="/images/set-up-my-own-blog/git&node.js%E6%A3%80%E9%AA%8C.png" alt="git&amp;node.js检验">下载后双击运行显示</p>
+<hr>
 <h2 id="安装和运行hexo"><a href="#安装和运行hexo" class="headerlink" title="安装和运行hexo"></a>安装和运行hexo</h2><h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 <p>在git下执行命令安装hexo</p>
 <p>（ps：输入命令后长时间卡住无法安装成功，可参考以下解决方案<br>此时按下 Ctrl+C 停止当前命令，输入以下命令配置淘宝镜像</p>
@@ -247,20 +248,81 @@
 <h3 id="初始化myblog"><a href="#初始化myblog" class="headerlink" title="初始化myblog"></a>初始化myblog</h3><p>创建myblog文件夹,然后,使用该命令初始化博客文件夹(加载时间较长)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
 
-<p><em>bug1:</em><br><em>FATAL （路径） not empty, please run <code>hexo init</code> on an empty folder and then copy your files into it</em><br><em>该bug可能为该目录不为空文件夹，或者这个目录已经有blog存在</em></p>
+<p><em>bug1:</em><br><em>博客初始化时不为空文件夹</em><br><em>FATAL （路径） not empty, please run <code>hexo init</code> on an empty folder and then copy your files into it</em><br><em>该bug可能为该目录不为空文件夹，或者这个目录已经有blog存在</em></p>
 <p><img src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%961.png" alt="博客初始化"><br><img src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%962.png" alt="博客初始化"><br>如图则初始化成功</p>
-<h3 id="运行本地博客"><a href="#运行本地博客" class="headerlink" title="运行本地博客"></a>运行本地博客</h3><p>在git bash here下运行并且点击（复制）链接到浏览器</p>
+<h3 id="运行本地博客"><a href="#运行本地博客" class="headerlink" title="运行本地博客"></a>运行本地博客</h3><p>在open git bash here下运行并且点击（复制）链接到浏览器</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 <p><img src="/images/set-up-my-own-blog/hexo%E8%BF%90%E8%A1%8C.png" alt="hexo 运行"><br>如图则可Ctrl+路径打开浏览器<br><img src="/images/set-up-my-own-blog/hexo%E6%89%93%E5%BC%80.png" alt="hexo 打开"><br>如图则成功打开hexo默认界面,路径为<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a></p>
-<p><em>bug2:</em><br><em><img src="/images/set-up-my-own-blog/hexo%E9%94%99%E8%AF%AF.png" alt="hexo 错误"></em><br><em>该bug为Ctrl+路径时没有打开端口，此时复制地址到浏览器打开即可</em></p>
-<h3 id="配置博客界面"><a href="#配置博客界面" class="headerlink" title="配置博客界面"></a>配置博客界面</h3><p>打开_config.yml，配置以下</p>
+<p><em>bug2:</em><br><em>本地打开未设置端口</em><br><em><img src="/images/set-up-my-own-blog/hexo%E9%94%99%E8%AF%AF.png" alt="hexo 错误"></em><br><em>该bug为Ctrl+路径时没有打开端口，此时复制地址到浏览器打开即可</em></p>
+<p><strong>3.hexo相关命令</strong></p>
 <ul>
-<li>title :显示在浏览器的标签页</li>
-<li>suthor ：作者</li>
+<li>hexo clean # 清除缓存文件，建议写完文章后执行一次</li>
+<li>hexo g		# 生成 public 文件夹，写完文章执行</li>
+<li>hexo s		# 启动 hexo 服务</li>
+<li>hexo new “文章标题”		#创建新的文章，在_post下</li>
+<li>配置完文件&#x2F;写完博客执行 hexo g</li>
+</ul>
+<h3 id="配置博客界面"><a href="#配置博客界面" class="headerlink" title="配置博客界面"></a>配置博客界面</h3><h2 id="打开-config-yml，配置以下-title-显示在浏览器的标签页-suthor-：作者"><a href="#打开-config-yml，配置以下-title-显示在浏览器的标签页-suthor-：作者" class="headerlink" title="打开_config.yml，配置以下- title :显示在浏览器的标签页- suthor ：作者"></a>打开_config.yml，配置以下<br>- title :显示在浏览器的标签页<br>- suthor ：作者</h2><ul>
 <li>其他的根据喜好配置即可，不赘述</li>
 </ul>
-<h3 id="配置博客主题"><a href="#配置博客主题" class="headerlink" title="配置博客主题"></a>配置博客主题</h3><p><a target="_blank" rel="noopener" href="https://hexo.io/themes">hexo官方主题页面</a><br>链接为hexo的官方主题页面</p>
+<h3 id="配置博客主题"><a href="#配置博客主题" class="headerlink" title="配置博客主题"></a>配置博客主题</h3><p><a target="_blank" rel="noopener" href="https://hexo.io/themes">hexo官方主题页面</a><br>链接为hexo的官方主题页面 <em>部分主体已不可使用</em></p>
+<ol>
+<li><p>点击Visit preview site预览该主题，点击主题名称进入该主题下的github</p>
+</li>
+<li><p>选择好看实用的主题下载压缩包（Next、hexo-theme-Chic-master…）</p>
+</li>
+<li><p>解压后将文件包放在themes下，并且修改_config.yml的theme名称</p>
+</li>
+<li><p>修改主题的_config.yml</p>
+</li>
+</ol>
+<ul>
+<li>名称</li>
+<li>图标</li>
+<li>作者</li>
+<li>联系方式等等</li>
+</ul>
+<hr>
+<h2 id="将hexo配置到GitHub-Pages"><a href="#将hexo配置到GitHub-Pages" class="headerlink" title="将hexo配置到GitHub Pages"></a>将hexo配置到GitHub Pages</h2><h3 id="创建github账号"><a href="#创建github账号" class="headerlink" title="创建github账号"></a>创建github账号</h3><p>不再赘述</p>
+<h3 id="创建新仓库"><a href="#创建新仓库" class="headerlink" title="创建新仓库"></a>创建新仓库</h3><p>仓库名必须为 <strong>（用户名）.github.io</strong>，否则可能无法将本地文件上传至GitHub，这个命名方式是 GitHub Pages 的特殊要求，用于识别和部署个人网站或博客。<br>仓库为公开仓库</p>
+<h3 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.emai1 <span class="string">&quot;邮箱地址&quot;</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="配置ssh"><a href="#配置ssh" class="headerlink" title="配置ssh"></a>配置ssh</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -c <span class="string">&quot;邮箱地址&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>配置git的ssh（由于linux有了远程，所以需要重新配置ssh防止覆盖）<br>ssh-keygen -t rsa -b 4096 -C “<a href="mailto:&#x31;&#x33;&#x37;&#53;&#x35;&#50;&#x38;&#49;&#x31;&#x38;&#64;&#113;&#113;&#46;&#99;&#111;&#109;">&#x31;&#x33;&#x37;&#53;&#x35;&#50;&#x38;&#49;&#x31;&#x38;&#64;&#113;&#113;&#46;&#99;&#111;&#109;</a>“ -f “D:\Git\liminghao.ssh\custom_key”<br>-t  加密方式<br>-b 生成密钥位数<br>-C 邮箱<br>-f  保存位置<br>中途可以不需要密码，直接按回车</p>
+<p>配置.ssh的config<br>只需要另建立一个Host即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host ssh.github.com</span><br><span class="line">  HostName ssh.github.com</span><br><span class="line">  User git</span><br><span class="line">  Port 443</span><br><span class="line">  IdentityFile C:/Users/31401/.ssh/id_github_rsa</span><br><span class="line">  IdentitiesOnly <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+<p>由于22端口被占用，所以改用443端口</p>
+<h3 id="配置GitHub的ssh"><a href="#配置GitHub的ssh" class="headerlink" title="配置GitHub的ssh"></a>配置GitHub的ssh</h3><ol>
+<li><p>settings-SSH and GPG keys-Kay HSS key</p>
+</li>
+<li><p>分别填写Title和id_rsa.pub</p>
+</li>
+<li><p>输入命令验证是否通过</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<p><em>bug3:</em><br><em>ssh端口被占用</em><br><em>ssh: connect to host github.com port 22: Connection refused</em><br><em>该bug为22端口被占用，换为443端口</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T -p 443 git@ssh.github.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> .git/config</span><br></pre></td></tr></table></figure>
+<p>可以检查链接远程的状态</p>
+</li>
+</ol>
+<h3 id="安装hexo-deployer-git插件"><a href="#安装hexo-deployer-git插件" class="headerlink" title="安装hexo-deployer-git插件"></a>安装hexo-deployer-git插件</h3><p>在刚刚创建的博客文件夹下再次打开 git bush，安装 hexo-deployer-git 插件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置deploy"><a href="#配置deploy" class="headerlink" title="配置deploy"></a>配置deploy</h3><p>打开主界面的_config.yml，在最底下配置deploy<br>deploy:<br>  type: git<br>  repo: <a href="mailto:&#x67;&#x69;&#x74;&#64;&#115;&#x73;&#104;&#x2e;&#103;&#x69;&#116;&#x68;&#x75;&#x62;&#46;&#99;&#x6f;&#x6d;">&#x67;&#x69;&#x74;&#64;&#115;&#x73;&#104;&#x2e;&#103;&#x69;&#116;&#x68;&#x75;&#x62;&#46;&#99;&#x6f;&#x6d;</a>:CREATE-MENG&#x2F;create-meng.github.io.git<br>  branch: main<br>  token: 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<br><strong>YAML 文件对缩进非常敏感，deploy 下的子项（如 type、repo、branch）必须保持一致的缩进，通常使用两个空格。</strong></p>
+<h3 id="上传静态文件到GitHub"><a href="#上传静态文件到GitHub" class="headerlink" title="上传静态文件到GitHub"></a>上传静态文件到GitHub</h3><p>执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>打开<a target="_blank" rel="noopener" href="https://create-meng.github.io/">你的自建博客网址:https:&#x2F;&#x2F;(用户名).github.io</a><br>即可看到你的自建博客网站</p>
+<p><em>bug4:</em><br><em>hexo d运行报错</em><br><em>fatal: unable to access ‘<a target="_blank" rel="noopener" href="https://github.com/create-meng/create-meng.github.io.git/">https://github.com/create-meng/create-meng.github.io.git/</a>‘: SSL peer certificate or SSH remote key was not OK</em><br><em>该bug未配置SSL证书，有以下几个修改方式</em></p>
+<p><em>1.临时禁用</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ssl证书有问题，因此临时禁用  </span></span><br><span class="line">git config --global http.sslVerify <span class="literal">false</span></span><br><span class="line"><span class="comment"># 部署完成后 再启用 </span></span><br><span class="line">git config --global http.sslVerify <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p><em>2.从 cacert.org 下载最新的 CA 证书文件，更新git的SSL证书</em></p>
+<p><em>3.repo为HTML链接，改为SSH链接即可，即上述内容</em></p>
+<p><em>bug5:</em><br><em>换行符冲突问题</em><br><em>warning: in the working copy of ‘tag&#x2F;index.html’, LF will be replaced by CRLF the next time Git touches it</em><br><em>该警告为CRLF转换为LF时发出的警告，有以下几种选择</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.autocrlf <span class="literal">true</span>  <span class="comment"># 在 Windows 上使用此选项，Git 会将提交的 CRLF 转换为 LF，并在检出时将 LF 转换回 CRLF。（自动转换，选用）</span></span><br><span class="line">git config --global core.autocrlf input  <span class="comment"># 在 Unix/Linux 系统上使用此选项，Git 会将 CRLF 转换为 LF，但检出时保持 LF 不变。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-18日0时38分，结束，明天再来更新绑定域名"><a href="#2-18日0时38分，结束，明天再来更新绑定域名" class="headerlink" title="2.18日0时38分，结束，明天再来更新绑定域名"></a>2.18日0时38分，结束，明天再来更新绑定域名</h2>
         </div>
 
         
