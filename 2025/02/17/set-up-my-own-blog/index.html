@@ -244,12 +244,15 @@
 <p>（ps：输入命令后长时间卡住无法安装成功，可参考以下解决方案<br>此时按下 Ctrl+C 停止当前命令，输入以下命令配置淘宝镜像</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
 <p>然后重新输入命令安装hexo）</p>
-<h3 id="初始化myblog"><a href="#初始化myblog" class="headerlink" title="初始化myblog"></a>初始化myblog</h3><ol>
-<li>创建myblog文件夹,然后,使用该命令初始化博客文件夹(加载时间较长)<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ol>
+<h3 id="初始化myblog"><a href="#初始化myblog" class="headerlink" title="初始化myblog"></a>初始化myblog</h3><p>创建myblog文件夹,然后,使用该命令初始化博客文件夹(加载时间较长)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+
 <p><em>bug1:</em><br><em>FATAL （路径） not empty, please run <code>hexo init</code> on an empty folder and then copy your files into it</em><br><em>该bug可能为该目录不为空文件夹，或者这个目录已经有blog存在</em></p>
-<p><img src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%96.png" alt="博客初始化">如图则初始化成功</p>
-<p>2. </p>
+<p><img src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%961.png" alt="博客初始化"><br><img src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%962.png" alt="博客初始化"><br>如图则初始化成功</p>
+<h3 id="运行本地博客"><a href="#运行本地博客" class="headerlink" title="运行本地博客"></a>运行本地博客</h3><p>在git bash here下运行并且点击（复制）链接到浏览器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p><img src="/images/set-up-my-own-blog/hexo%E8%BF%90%E8%A1%8C.png" alt="hexo 运行"><br>如图则可Ctrl+路径打开浏览器<br><img src="/images/set-up-my-own-blog/hexo%E6%89%93%E5%BC%80.png" alt="hexo 打开"><br>如图则成功打开hexo默认界面</p>
+<p><em>bug2:</em><br><em><img src="/images/set-up-my-own-blog/hexo%E9%94%99%E8%AF%AF.png" alt="hexo 错误"></em><br><em>该bug为Ctrl+路径时没有打开端口，此时复制地址到浏览器打开即可</em></p>
 
         </div>
 
