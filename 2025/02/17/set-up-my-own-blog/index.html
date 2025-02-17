@@ -239,6 +239,17 @@
 </ol>
 <h3 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git -v</span><br><span class="line">node -v</span><br></pre></td></tr></table></figure>
 <p>如图，显示版本号即安装成功<br><img src="/images/set-up-my-own-blog/git&node.js%E6%A3%80%E9%AA%8C.png" alt="git&amp;node.js检验">下载后双击运行显示</p>
+<h2 id="安装和运行hexo"><a href="#安装和运行hexo" class="headerlink" title="安装和运行hexo"></a>安装和运行hexo</h2><h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>在git下执行命令安装hexo</p>
+<p>（ps：输入命令后长时间卡住无法安装成功，可参考以下解决方案<br>此时按下 Ctrl+C 停止当前命令，输入以下命令配置淘宝镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+<p>然后重新输入命令安装hexo）</p>
+<h3 id="初始化myblog"><a href="#初始化myblog" class="headerlink" title="初始化myblog"></a>初始化myblog</h3><ol>
+<li>创建myblog文件夹,然后,使用该命令初始化博客文件夹(加载时间较长)<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><em>bug1:</em><br><em>FATAL （路径） not empty, please run <code>hexo init</code> on an empty folder and then copy your files into it</em><br><em>该bug可能为该目录不为空文件夹，或者这个目录已经有blog存在</em></p>
+<p><img src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%96.png" alt="博客初始化">如图则初始化成功</p>
+<p>2. </p>
 
         </div>
 
