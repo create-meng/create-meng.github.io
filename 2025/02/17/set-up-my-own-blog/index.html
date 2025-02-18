@@ -223,17 +223,18 @@
 </ul>
 <h2 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h2><ol>
 <li><a href="#%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2">搭建博客</a></li>
-<li><a href="#%E5%B0%86hexo%E9%85%8D%E7%BD%AE%E5%88%B0github-pages">Hexo配置到GitHub-Pages</a></li>
-<li><a href="#%E5%B0%86%E5%9F%9F%E5%90%8D%E4%B8%8Egithun-pages%E7%BB%91%E5%AE%9A">域名与GitHun Pages绑定</a></li>
-<li><a href="#%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA">部署博客到云服务器&#x2F;虚拟主机</a></li>
+<li><a href="#%E5%B0%86hexo%E9%85%8D%E7%BD%AE%E5%88%B0github">Hexo配置到GitHub Pages</a></li>
+<li><a href="#%E5%B0%86%E5%9F%9F%E5%90%8D%E4%B8%8Egithub%E7%BB%91%E5%AE%9A">域名与GitHun Pages绑定</a></li>
+<li><a href="#%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%92%8C%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA">部署博客到云服务器和虚拟主机</a></li>
 </ol>
+<hr>
 <h1 id="搭建博客"><a href="#搭建博客" class="headerlink" title="搭建博客"></a>搭建博客</h1><h2 id="安装Git和Node-js"><a href="#安装Git和Node-js" class="headerlink" title="安装Git和Node.js"></a>安装Git和Node.js</h2><h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><h4 id="Git安装网址"><a href="#Git安装网址" class="headerlink" title="Git安装网址"></a><a target="_blank" rel="noopener" href="https://git-scm.com/downloads/win">Git安装网址</a></h4><p>点击此处下载文件</p>
 <ol>
 <li><p><img src="/images/set-up-my-own-blog/gti%E5%AE%89%E8%A3%85%E7%95%8C%E9%9D%A2.png" alt="Git安装界面"></p>
 </li>
 <li><p><img src="/images/set-up-my-own-blog/git%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A41.png" alt="Git安装步骤1">下载后双击运行显示</p>
 </li>
-<li><p>后续点击默认或者推荐选项继续运行(本来有一篇csdn讲述了Git如何安装，可惜收藏后一不小心颠倒了取消收藏，然后前段时间配置域名又清除了搜索记录，找不到了(哭))</p>
+<li><p>后续点击默认或者推荐选项继续运行(本来有一篇csdn讲述了Git如何安装，可惜收藏后一不小心点到了取消收藏，然后前段时间配置域名又清除了搜索记录，找不到了(哭))</p>
 </li>
 </ol>
 <h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><h4 id="Node-js安装网址"><a href="#Node-js安装网址" class="headerlink" title="Node.js安装网址"></a><a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn">Node.js安装网址</a></h4><p>点击此处下载文件</p>
@@ -258,30 +259,32 @@
 
 <p><em>bug1:</em><br><em>博客初始化时不为空文件夹</em><br><em>FATAL （路径） not empty, please run <code>hexo init</code> on an empty folder and then copy your files into it</em><br><em>该bug可能为该目录不为空文件夹，或者这个目录已经有blog存在</em></p>
 <p><img src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%961.png" alt="博客初始化"><br><img src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%962.png" alt="博客初始化"><br>如图则初始化成功</p>
-<h3 id="运行本地博客"><a href="#运行本地博客" class="headerlink" title="运行本地博客"></a>运行本地博客</h3><p>在open git bash here下运行并且点击（复制）链接到浏览器</p>
+<h3 id="运行本地博客"><a href="#运行本地博客" class="headerlink" title="运行本地博客"></a>运行本地博客</h3><p>在<code>open git bash here</code>下运行并且点击（复制）链接到浏览器</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 <p><img src="/images/set-up-my-own-blog/hexo%E8%BF%90%E8%A1%8C.png" alt="hexo 运行"><br>如图则可Ctrl+路径打开浏览器<br><img src="/images/set-up-my-own-blog/hexo%E6%89%93%E5%BC%80.png" alt="hexo 打开"><br>如图则成功打开hexo默认界面,路径为<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a></p>
 <p><em>bug2:</em><br><em>本地打开未设置端口</em><br><em><img src="/images/set-up-my-own-blog/hexo%E9%94%99%E8%AF%AF.png" alt="hexo 错误"></em><br><em>该bug为Ctrl+路径时没有打开端口，此时复制地址到浏览器打开即可</em></p>
-<p><strong>3.hexo相关命令</strong></p>
-<ul>
-<li>hexo clean # 清除缓存文件，建议写完文章后执行一次</li>
-<li>hexo g		# 生成 public 文件夹，写完文章执行</li>
-<li>hexo s		# 启动 hexo 服务</li>
-<li>hexo new “文章标题”		#创建新的文章，在_post下</li>
-<li>配置完文件&#x2F;写完博客执行 hexo g</li>
+<h3 id="hexo相关命令"><a href="#hexo相关命令" class="headerlink" title="hexo相关命令"></a>hexo相关命令</h3><ul>
+<li><strong>hexo clean # 清除缓存文件，建议写完文章后执行一次</strong></li>
+<li><strong>hexo g		# 生成 public 文件夹，写完文章执行</strong></li>
+<li><strong>hexo s		# 启动 hexo 服务</strong></li>
+<li><strong>hexo new “文章标题”		#创建新的文章，在_post下</strong></li>
+<li><strong>配置完文件&#x2F;写完博客执行 hexo g</strong></li>
 </ul>
-<h3 id="配置博客界面"><a href="#配置博客界面" class="headerlink" title="配置博客界面"></a>配置博客界面</h3><h2 id="打开-config-yml，配置以下-title-显示在浏览器的标签页-suthor-：作者"><a href="#打开-config-yml，配置以下-title-显示在浏览器的标签页-suthor-：作者" class="headerlink" title="打开_config.yml，配置以下- title :显示在浏览器的标签页- suthor ：作者"></a>打开_config.yml，配置以下<br>- title :显示在浏览器的标签页<br>- suthor ：作者</h2><ul>
+<h3 id="配置博客界面"><a href="#配置博客界面" class="headerlink" title="配置博客界面"></a>配置博客界面</h3><p>打开<code>_config.yml</code>，配置以下选项</p>
+<ul>
+<li>title :显示在浏览器的标签页</li>
+<li>suthor ：作者</li>
 <li>其他的根据喜好配置即可，不赘述</li>
 </ul>
-<h3 id="配置博客主题"><a href="#配置博客主题" class="headerlink" title="配置博客主题"></a>配置博客主题</h3><p><a target="_blank" rel="noopener" href="https://hexo.io/themes">hexo官方主题页面</a><br>链接为hexo的官方主题页面 <em>部分主体已不可使用</em></p>
+<h3 id="配置博客主题"><a href="#配置博客主题" class="headerlink" title="配置博客主题"></a>配置博客主题</h3><p><a target="_blank" rel="noopener" href="https://hexo.io/themes">hexo官方主题页面</a><br>链接为hexo的官方主题页面 <em>部分主题已不可使用</em></p>
 <ol>
-<li><p>点击Visit preview site预览该主题，点击主题名称进入该主题下的github</p>
+<li><p>点击<code>Visit preview site</code>预览该主题，点击主题名称进入该主题下的github页面</p>
 </li>
-<li><p>选择好看实用的主题下载压缩包（Next、hexo-theme-Chic-master…）</p>
+<li><p>选择好看实用的主题下载压缩包（推荐Next、hexo-theme-Chic-master…）</p>
 </li>
-<li><p>解压后将文件包放在themes下，并且修改_config.yml的theme名称</p>
+<li><p>解压后将文件包放在themes下，并且修改<code>_config.yml</code>的theme名称</p>
 </li>
-<li><p>修改主题的_config.yml</p>
+<li><p>修改<code>主题的_config.yml</code></p>
 </li>
 </ol>
 <ul>
@@ -291,14 +294,17 @@
 <li>联系方式等等</li>
 </ul>
 <hr>
-<h1 id="将Hexo配置到GitHub-Pages"><a href="#将Hexo配置到GitHub-Pages" class="headerlink" title="将Hexo配置到GitHub Pages"></a>将Hexo配置到GitHub Pages</h1><h3 id="创建github账号"><a href="#创建github账号" class="headerlink" title="创建github账号"></a>创建github账号</h3><p>不再赘述</p>
-<h3 id="创建新仓库"><a href="#创建新仓库" class="headerlink" title="创建新仓库"></a>创建新仓库</h3><p>仓库名必须为 <strong>（用户名）.github.io</strong>，否则可能无法将本地文件上传至GitHub，这个命名方式是 GitHub Pages 的特殊要求，用于识别和部署个人网站或博客。<br>仓库为公开仓库</p>
+<h1 id="将Hexo配置到GitHub"><a href="#将Hexo配置到GitHub" class="headerlink" title="将Hexo配置到GitHub"></a>将Hexo配置到GitHub</h1><h3 id="创建github账号"><a href="#创建github账号" class="headerlink" title="创建github账号"></a>创建github账号</h3><p>不再赘述</p>
+<h3 id="创建新仓库"><a href="#创建新仓库" class="headerlink" title="创建新仓库"></a>创建新仓库</h3><ul>
+<li>仓库名必须为 <strong>（用户名）.github.io</strong>，否则可能无法将本地文件上传至GitHub，这个命名方式是 GitHub Pages 的特殊要求，用于识别和部署个人网站或博客。</li>
+<li>仓库为公开仓库</li>
+</ul>
 <h3 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.emai1 <span class="string">&quot;邮箱地址&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="配置ssh"><a href="#配置ssh" class="headerlink" title="配置ssh"></a>配置ssh</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -c <span class="string">&quot;邮箱地址&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>配置git的ssh（由于linux有了远程，所以需要重新配置ssh防止覆盖）<br>ssh-keygen -t rsa -b 4096 -C “<a href="mailto:&#49;&#x33;&#55;&#x35;&#x35;&#50;&#56;&#49;&#49;&#56;&#64;&#x71;&#113;&#46;&#99;&#111;&#x6d;">&#49;&#x33;&#55;&#x35;&#x35;&#50;&#56;&#49;&#49;&#56;&#64;&#x71;&#113;&#46;&#99;&#111;&#x6d;</a>“ -f “D:\Git\liminghao.ssh\custom_key”<br>-t  加密方式<br>-b 生成密钥位数<br>-C 邮箱<br>-f  保存位置<br>中途可以不需要密码，直接按回车</p>
-<p>配置.ssh的config<br>只需要另建立一个Host即可</p>
+<h4 id="配置git的ssh"><a href="#配置git的ssh" class="headerlink" title="配置git的ssh"></a>配置git的ssh</h4><p>（由于学习linux用了远程，所以需要重新命名ssh防止覆盖上次的密钥）<br><code>ssh-keygen -t rsa -b 4096 -C &quot;1375528118@qq.com&quot; </code><br>-f”D:\Git\liminghao.ssh\custom_key”<br>-t  加密方式<br>-b 生成密钥位数<br>-C 邮箱<br>-f  保存位置<br>中途可以不需要密码，直接按回车</p>
+<h4 id="配置-ssh的config"><a href="#配置-ssh的config" class="headerlink" title="配置.ssh的config"></a>配置.ssh的config</h4><p>只需要另建立一个Host即可</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host ssh.github.com</span><br><span class="line">  HostName ssh.github.com</span><br><span class="line">  User git</span><br><span class="line">  Port 443</span><br><span class="line">  IdentityFile C:/Users/31401/.ssh/id_github_rsa</span><br><span class="line">  IdentitiesOnly <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
 <p>由于22端口被占用，所以改用443端口</p>
 <h3 id="配置GitHub的ssh"><a href="#配置GitHub的ssh" class="headerlink" title="配置GitHub的ssh"></a>配置GitHub的ssh</h3><ol>
@@ -307,48 +313,51 @@
 <li><p>分别填写Title和id_rsa.pub</p>
 </li>
 <li><p>输入命令验证是否通过</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></li>
+</ol>
 <p><em>bug3:</em><br><em>ssh端口被占用</em><br><em>ssh: connect to host github.com port 22: Connection refused</em><br><em>该bug为22端口被占用，换为443端口</em></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T -p 443 git@ssh.github.com</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> .git/config</span><br></pre></td></tr></table></figure>
-<p>可以检查链接远程的状态</p>
-</li>
-</ol>
-<h3 id="安装hexo-deployer-git插件"><a href="#安装hexo-deployer-git插件" class="headerlink" title="安装hexo-deployer-git插件"></a>安装hexo-deployer-git插件</h3><p>在刚刚创建的博客文件夹下再次打开 git bush，安装 hexo-deployer-git 插件</p>
+<p>可以检查链接远程的状态(貌似最初忘记初始化git，所以我这里git的所有命令使用不了)</p>
+<h3 id="安装hexo-deployer-git插件"><a href="#安装hexo-deployer-git插件" class="headerlink" title="安装hexo-deployer-git插件"></a>安装hexo-deployer-git插件</h3><p>在刚刚创建的博客文件夹下再次打开<code>open git bash here</code>，安装 <code>hexo-deployer-git</code> 插件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 
-<h3 id="配置deploy"><a href="#配置deploy" class="headerlink" title="配置deploy"></a>配置deploy</h3><p>打开主界面的_config.yml，在最底下配置deploy<br>deploy:<br>  type: git<br>  repo: <a href="mailto:&#x67;&#105;&#x74;&#64;&#x73;&#115;&#104;&#x2e;&#103;&#105;&#116;&#104;&#117;&#98;&#x2e;&#99;&#111;&#x6d;">&#x67;&#105;&#x74;&#64;&#x73;&#115;&#104;&#x2e;&#103;&#105;&#116;&#104;&#117;&#98;&#x2e;&#99;&#111;&#x6d;</a>:CREATE-MENG&#x2F;create-meng.github.io.git<br>  branch: main<br><strong>YAML 文件对缩进非常敏感，deploy 下的子项（如 type、repo、branch）必须保持一致的缩进，通常使用两个空格。</strong></p>
+<h3 id="配置deploy"><a href="#配置deploy" class="headerlink" title="配置deploy"></a>配置deploy</h3><p>打开主界面的<code>_config.yml</code>，在最底下配置deploy<br>deploy:<br>  type: git<br>  repo: <a href="mailto:&#x67;&#105;&#x74;&#x40;&#115;&#115;&#104;&#x2e;&#103;&#x69;&#116;&#x68;&#117;&#x62;&#46;&#x63;&#111;&#x6d;">&#x67;&#105;&#x74;&#x40;&#115;&#115;&#104;&#x2e;&#103;&#x69;&#116;&#x68;&#117;&#x62;&#46;&#x63;&#111;&#x6d;</a>:CREATE-MENG&#x2F;create-meng.github.io.git<br>  branch: main</p>
+<p><strong>YAML 文件对缩进非常敏感，deploy 下的子项（如 type、repo、branch）必须保持一致的缩进，通常使用两个空格。</strong></p>
 <h3 id="上传静态文件到GitHub"><a href="#上传静态文件到GitHub" class="headerlink" title="上传静态文件到GitHub"></a>上传静态文件到GitHub</h3><p>执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
 
 <p>打开<a target="_blank" rel="noopener" href="https://create-meng.github.io/">你的自建博客网址:https:&#x2F;&#x2F;(用户名).github.io</a><br>即可看到你的自建博客网站</p>
 <p><em>bug4:</em><br><em>hexo d运行报错</em><br><em>fatal: unable to access ‘<a target="_blank" rel="noopener" href="https://github.com/create-meng/create-meng.github.io.git/">https://github.com/create-meng/create-meng.github.io.git/</a>‘: SSL peer certificate or SSH remote key was not OK</em><br><em>该bug未配置SSL证书，有以下几个修改方式</em></p>
 <p><em>1.临时禁用</em></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ssl证书有问题，因此临时禁用  </span></span><br><span class="line">git config --global http.sslVerify <span class="literal">false</span></span><br><span class="line"><span class="comment"># 部署完成后 再启用 </span></span><br><span class="line">git config --global http.sslVerify <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p><em>2.从 cacert.org 下载最新的 CA 证书文件，更新git的SSL证书</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ssl证书有问题，因此临时禁用  </span></span><br><span class="line">git config --global http.sslVerify <span class="literal">false</span></span><br><span class="line"><span class="comment"># 部署完成后 再启用 </span></span><br><span class="line">git config --global http.sslVerify <span class="literal">true</span></span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<p><em>2.从 <code>cacert.org</code> 下载最新的 CA 证书文件，更新git的SSL证书</em></p>
 <p><em>3.repo为HTML链接，改为SSH链接即可，即上述内容</em></p>
 <p><em>bug5:</em><br><em>换行符冲突问题</em><br><em>warning: in the working copy of ‘tag&#x2F;index.html’, LF will be replaced by CRLF the next time Git touches it</em><br><em>该警告为CRLF转换为LF时发出的警告，有以下几种选择</em></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.autocrlf <span class="literal">true</span>  <span class="comment"># 在 Windows 上使用此选项，Git 会将提交的 CRLF 转换为 LF，并在检出时将 LF 转换回 CRLF。（自动转换，选用）</span></span><br><span class="line">git config --global core.autocrlf input  <span class="comment"># 在 Unix/Linux 系统上使用此选项，Git 会将 CRLF 转换为 LF，但检出时保持 LF 不变。</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="2-18日0时38分，结束，明天再来更新绑定域名"><a href="#2-18日0时38分，结束，明天再来更新绑定域名" class="headerlink" title="2.18日0时38分，结束，明天再来更新绑定域名"></a>2.18日0时38分，结束，明天再来更新绑定域名</h2><p>现在是2.1911时40分，来更新两部分，一是绑定域名解析，二是部署服务器</p>
-<h1 id="将域名与GitHun-Pages绑定"><a href="#将域名与GitHun-Pages绑定" class="headerlink" title="将域名与GitHun Pages绑定"></a>将域名与GitHun Pages绑定</h1><h2 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h2><p>可以在以下购买，也可以使用二级域名，以下价格为最便宜的价格，其他自行查看</p>
+<hr>
+<p>2.18日0时38分，结束，明天再来更新绑定域名</p>
+<hr>
+<p>现在是2.19日11时40分，来更新两部分，一是绑定域名解析，二是部署服务器</p>
+<h1 id="将域名与GitHub绑定"><a href="#将域名与GitHub绑定" class="headerlink" title="将域名与GitHub绑定"></a>将域名与GitHub绑定</h1><h2 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h2><p>可以在以下购买，也可以使用二级域名，以下价格为最便宜的价格，其他自行查看</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://buy.cloud.tencent.com/domain">腾讯云</a>,（.top域名）首年14元，续费32元</li>
-<li><a target="_blank" rel="noopener" href="https://wanwang.aliyun.com/domain?spm=5176.21213303.J_v8LsmxMG6alneH-O7TCPa.2.25062f3dNHdi7J&scm=20140722.S_card@@%E4%BA%A7%E5%93%81@@3417315._.ID_card@@%E4%BA%A7%E5%93%81@@3417315-RL_%E5%9F%9F%E5%90%8D-LOC_search~UND~card~UND~item-OR_ser-PAR1_215041cc17398506878775079ee2f1-V_4-RE_new6-P0_0-P1_0">阿里云</a>,（.top域名）首年12元，续费32元</li>
-<li><a target="_blank" rel="noopener" href="https://www.namesilo.com/">nameslio</a>（.sbs域名）首年1.79美元，续费14.95美元</li>
-<li><a target="_blank" rel="noopener" href="https://www.freedns.fun/">二级域名分发</a>免费使用，但可能不太稳定，也可以自行寻找二级域名分发网站<br>(蛐蛐：本来以为国内的域名申请解析都需要备案，后来发现解析到github不需要备案，亏我还找了一堆教程寻找国外不需要备案的域名申请)<br>由于本人傻傻的不清楚，买了nameslio，购买教程<a href="#%E5%89%8D%E8%A8%80">点击跳转到前言第三条</a><br>但由于二级域名也可以，所以建议直接使用免费域名算了，以下将给出nameslio的域名解析到github的教程，二级域名同理</li>
+<li><a target="_blank" rel="noopener" href="https://buy.cloud.tencent.com/domain">腾讯云</a>（.top域名）首年14元，续费32元</li>
+<li><a target="_blank" rel="noopener" href="https://wanwang.aliyun.com/domain?spm=5176.21213303.J_v8LsmxMG6alneH-O7TCPa.2.25062f3dNHdi7J&scm=20140722.S_card@@%E4%BA%A7%E5%93%81@@3417315._.ID_card@@%E4%BA%A7%E5%93%81@@3417315-RL_%E5%9F%9F%E5%90%8D-LOC_search~UND~card~UND~item-OR_ser-PAR1_215041cc17398506878775079ee2f1-V_4-RE_new6-P0_0-P1_0">阿里云</a>（.top域名）首年12元，续费32元</li>
+<li><a target="_blank" rel="noopener" href="https://www.namesilo.com/">namesilo</a>（.sbs域名）首年1.79美元，续费14.95美元</li>
+<li><a target="_blank" rel="noopener" href="https://www.freedns.fun/">二级域名分发</a>免费使用，但可能不太稳定，也可以自行寻找二级域名分发网站<br>(蛐蛐：本来以为国内的域名申请解析都需要备案，后来发现解析到github不需要备案，亏我还找了一堆教程寻找国外不需要备案的域名申请)<br>由于本人傻傻的不清楚，买了namesilo，购买教程<a href="#%E5%89%8D%E8%A8%80">点击跳转到前言第三条</a><br>但由于二级域名也可以，所以建议直接使用免费域名算了，以下将给出namesilo的域名解析到github的教程，二级域名同理</li>
 </ul>
-<h2 id="将域名解析到-GitHub-Pages"><a href="#将域名解析到-GitHub-Pages" class="headerlink" title="将域名解析到 GitHub Pages"></a>将域名解析到 GitHub Pages</h2><h3 id="配置nameslio"><a href="#配置nameslio" class="headerlink" title="配置nameslio"></a>配置nameslio</h3><p><img src="/images/set-up-my-own-blog/nameslio%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%901.png" alt="nameslio域名解析"></p>
+<h2 id="将域名解析到-GitHub-Pages"><a href="#将域名解析到-GitHub-Pages" class="headerlink" title="将域名解析到 GitHub Pages"></a>将域名解析到 GitHub Pages</h2><h3 id="配置namesilo"><a href="#配置namesilo" class="headerlink" title="配置namesilo"></a>配置namesilo</h3><p><img src="/images/set-up-my-own-blog/namesilo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%901.png" alt="namesilo域名解析"></p>
 <ol>
-<li>点击进入域名解析<br><img src="/images/set-up-my-own-blog/nameslio%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%902.png" alt="nameslio域名解析配置"></li>
-<li>选择Select the resource record type you want to create对应的A和CNAME记录完成以上配置<br>(ps:四个ip地址为github专门用来搭建个人静态博客的网址，CNAME为你的博客网站名，即（用户名）.github.io)</li>
+<li>点击像蓝色球体的标识进入域名解析<br><img src="/images/set-up-my-own-blog/namesilo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%902.png" alt="namesilo域名解析配置"></li>
+<li>选择<code>Select the resource record type you want to create</code>对应的A和CNAME记录完成以上配置<br>(ps:四个ip地址为github专门用来搭建个人静态博客的网址，CNAME为你的博客网站名，即<code>（用户名）.github.io</code>)</li>
 </ol>
 <h3 id="配置Github"><a href="#配置Github" class="headerlink" title="配置Github"></a>配置Github</h3><ol>
-<li><p>打开你的仓库，上面找到settings<br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%901.png" alt="github域名解析"></p>
+<li><p>打开你的仓库，上面找到<code>settings</code><br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%901.png" alt="github域名解析"></p>
 </li>
-<li><p>下滑找到Pages，将域名输入到图示方框中，并且勾选Enforce HTTPS(github自动为你申请安全证书)<br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%902.png" alt="github域名解析配置"></p>
+<li><p>下滑找到<code>Pages</code>，将域名输入到图示方框中，并且勾选<code>Enforce HTTPS</code>(github自动为你申请安全证书)<br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%902.png" alt="github域名解析配置"></p>
 </li>
-<li><p>仓库内新建一个文件，名称为CNAME，内容为你的域名<br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%903.png" alt="github域名解析配置CNAME"></p>
+<li><p>仓库内新建一个文件，名称为<code>CNAME</code>，内容为你的域名<br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%903.png" alt="github域名解析配置CNAME"></p>
 </li>
 </ol>
 <h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
@@ -358,12 +367,13 @@
 </li>
 <li><p>配置GitHub解析为仓库内的settings，而不是总的settings，鬼知道我在总的settings那里找了多久都没找到</p>
 </li>
-<li><p>bug相关(我印象里遇到了很多问题，也问了ai，但是问题是莫名都消失不见了，就很离谱，仿佛时光莫名消失)<br><em>bug6:</em><br><em>域名无法跳转到博客</em><br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%8A%A5%E9%94%991.png" alt="github域名解析报错1"><br><em>404 Thero isn’t a GitHub Pages site here.</em><br><em>该bug为缺少CNAME文件，请检查仓库内的CNAME未见内容是否拼写错误</em></p>
+<li><p>bug相关(我印象里遇到了很多问题，也问了ai，但是问题是莫名都消失不见了，就很离谱，仿佛时光莫名消失)</p>
 </li>
 </ol>
+<p><em>bug6:</em><br><em>域名无法跳转到博客</em><br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%8A%A5%E9%94%991.png" alt="github域名解析报错1"><br><em>404 Thero isn’t a GitHub Pages site here.</em><br><em>该bug为缺少CNAME文件，请检查仓库内的CNAME未见内容是否拼写错误</em></p>
 <hr>
-<p>现在是晚上九点，又玩了一下午，（我有罪谢谢），咱图像就是这样又懒又勤奋的，下面进入正文：</p>
-<h1 id="部署博客到云服务器-虚拟主机"><a href="#部署博客到云服务器-虚拟主机" class="headerlink" title="部署博客到云服务器&#x2F;虚拟主机"></a>部署博客到云服务器&#x2F;虚拟主机</h1><h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p>由于服务器偏贵，舍不得买，所以买了虚拟主机。另外寻找了一个免费的云服务器，这个csdn上可以自己尝试寻找，不过需要宣传才能一直使用下去，否则只能使用一天，宣传可以加5天使用时间，但是运气很好，浪浪云的抽奖抽到了一个月的香港云服务器，所以本教程本章分为两部分，一是部署到云服务器，二是部署到虚拟主机，但其实两者差别不大，虚拟主机的可操作空间没有云服务器大，但是对于部署个人博客没有什么区别</p>
+<p>现在是晚上九点，又玩了一下午，（我有罪谢谢），咱土象就是这样又懒又勤奋的，下面进入正文：</p>
+<h1 id="部署博客到云服务器和虚拟主机"><a href="#部署博客到云服务器和虚拟主机" class="headerlink" title="部署博客到云服务器和虚拟主机"></a>部署博客到云服务器和虚拟主机</h1><h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p>由于服务器偏贵，舍不得买，所以买了虚拟主机。另外寻找了一个免费的云服务器，这个csdn上可以自己尝试寻找，不过需要宣传才能一直使用下去，否则只能使用一天，宣传可以加5天使用时间，但是运气很好，浪浪云的抽奖抽到了一个月的香港云服务器，所以本教程本章分为两部分，一是部署到云服务器，二是部署到虚拟主机，但其实两者差别不大，虚拟主机的可操作空间没有云服务器大，但是对于部署个人博客没有什么区别</p>
 <h2 id="部署到云服务器"><a href="#部署到云服务器" class="headerlink" title="部署到云服务器"></a>部署到云服务器</h2><h3 id="配置云服务器"><a href="#配置云服务器" class="headerlink" title="配置云服务器"></a>配置云服务器</h3><p>安装带宝塔系统的系统或者安装好普通系统进入<a target="_blank" rel="noopener" href="https://www.bt.cn/new/download.html">宝塔面板安装中心</a>选择合适的命令远程连接服务器进行安装，安装好后根据指示网址账号密码登录宝塔面板即可，这里使用的是自带宝塔系统的云服务器</p>
 <ol>
 <li><img src="/images/set-up-my-own-blog/%E8%87%AA%E5%B8%A6%E5%AE%9D%E5%A1%94.png" alt="云服务器宝塔系统"><br>点击设置进入，如图等待系统安装成功</li>
@@ -372,10 +382,12 @@
 <h3 id="配置宝塔系统"><a href="#配置宝塔系统" class="headerlink" title="配置宝塔系统"></a>配置宝塔系统</h3><ol>
 <li><img src="/images/set-up-my-own-blog/%E7%BB%91%E5%AE%9A%E5%AE%98%E7%BD%91%E8%B4%A6%E5%8F%B7.png" alt="绑定官网账号"><br>如图注册和登录宝塔账号</li>
 <li><img src="/images/set-up-my-own-blog/%E7%99%BB%E9%99%86%E6%88%90%E5%8A%9F.png" alt="登陆成功"><br>如图选择推荐进行安装，等待安装完成</li>
-<li>等待Nginx安装完成后，两种方式<br><img src="/images/set-up-my-own-blog/%E7%BD%91%E7%AB%99%E9%85%8D%E7%BD%AE%E6%88%90%E5%8A%9F.png" alt="网站配置成功"></li>
+<li>等待Nginx安装完成后，两种方式</li>
 </ol>
 <ul>
-<li>点击网站，设置自己的域名<br><img src="/images/set-up-my-own-blog/%E5%AE%9D%E5%A1%94%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.png" alt="宝塔根目录文件上传"></li>
+<li><img src="/images/set-up-my-own-blog/%E7%BD%91%E7%AB%99%E9%85%8D%E7%BD%AE%E6%88%90%E5%8A%9F.png" alt="网站配置成功"></li>
+<li>点击网站，设置自己的域名</li>
+<li><img src="/images/set-up-my-own-blog/%E5%AE%9D%E5%A1%94%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.png" alt="宝塔根目录文件上传"></li>
 <li>然后删除所有文件，将myblog下的public文件夹内的内容上传至此即可</li>
 </ul>
 <p>或者使用Docker，但由于需要安装Docker安装一直出问题，所以暂且不管</p>
@@ -387,8 +399,11 @@
 <li>绑定域名，不过需要审核，可能会要好久<br><img src="/images/set-up-my-own-blog/%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D.png" alt="虚拟主机绑定域名"></li>
 <li>修改文件，不过需要每次重新上传更新<br><img src="/images/set-up-my-own-blog/%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6.png" alt="虚拟主机修改文件"></li>
 </ol>
-<h1 id="bug汇总"><a href="#bug汇总" class="headerlink" title="bug汇总"></a>bug汇总</h1><p><a href="#%E5%88%9D%E5%A7%8B%E5%8C%96myblog">bug1：博客初始化时不为空文件夹</a><br><a href="#%E8%BF%90%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%8D%9A%E5%AE%A2">bug2：本地打开未设置端口</a><br><a href="#%E9%85%8D%E7%BD%AEgithub%E7%9A%84ssh">bug3：ssh端口被占用</a><br><a href="#%E4%B8%8A%E4%BC%A0%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E5%88%B0github">bug4：hexo d运行报错</a><br><a href="#%E5%B0%86%E5%9F%9F%E5%90%8D%E4%B8%8Egithun-pages%E7%BB%91%E5%AE%9A">bug5：换行符冲突问题</a><br><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">bug6：域名无法跳转到博客</a></p>
-<h2 id="OK至此所有的关于博客搭建的任务都已经完成了，撒花"><a href="#OK至此所有的关于博客搭建的任务都已经完成了，撒花" class="headerlink" title="OK至此所有的关于博客搭建的任务都已经完成了，撒花~"></a><strong>OK至此所有的关于博客搭建的任务都已经完成了，撒花~</strong></h2>
+<h1 id="bug汇总"><a href="#bug汇总" class="headerlink" title="bug汇总"></a>bug汇总</h1><p><a href="#%E5%88%9D%E5%A7%8B%E5%8C%96myblog">bug1：博客初始化时不为空文件夹</a><br><a href="#%E8%BF%90%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%8D%9A%E5%AE%A2">bug2：本地打开未设置端口</a><br><a href="#%E9%85%8D%E7%BD%AEgithub%E7%9A%84ssh">bug3：ssh端口被占用</a><br><a href="#%E4%B8%8A%E4%BC%A0%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E5%88%B0github">bug4：hexo d运行报错</a><br><a href="#%E4%B8%8A%E4%BC%A0%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E5%88%B0github">bug5：换行符冲突问题</a><br><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">bug6：域名无法跳转到博客</a></p>
+<hr>
+<p><strong>OK至此所有的关于博客搭建的任务都已经完成了，撒花~</strong></p>
+<hr>
+
         </div>
 
         
