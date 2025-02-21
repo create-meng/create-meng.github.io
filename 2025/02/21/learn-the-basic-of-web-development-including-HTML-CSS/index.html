@@ -13,7 +13,7 @@
 
 
 
-<title>learn the basic of web development including HTML &amp; CSS | minghao&#39;s blog -Hexo</title>
+<title>learn the basic of web development including HTML &amp; CSS 学习网页开发基础包括HTML和CSS | minghao&#39;s blog -Hexo</title>
 
 
 
@@ -127,11 +127,76 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">learn the basic of web development including HTML &amp; CSS</h1>
+            <h1 class="post-title">learn the basic of web development including HTML &amp; CSS 学习网页开发基础包括HTML和CSS</h1>
             
                 <div class="post-meta">
                     
@@ -156,7 +221,267 @@
         </header>
 
         <div class="post-content">
-            
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ok今天来总结一下学习的HTML和CSS</p>
+<h2 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h2><ol>
+<li><a href="#html">HTML</a></li>
+<li><a href="#css">CSS</a></li>
+</ol>
+<hr>
+<h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><h2 id="一、HTML-基础"><a href="#一、HTML-基础" class="headerlink" title="一、HTML 基础"></a>一、HTML 基础</h2><ul>
+<li><strong>定义</strong>：超文本标记语言（HyperText Markup Language），用于创建网页的标记语言。</li>
+<li><strong>作用</strong>：构建网页的结构和内容，如文本、图像、链接、表单等。</li>
+</ul>
+<h3 id="1-HTML-文档结构"><a href="#1-HTML-文档结构" class="headerlink" title="1. HTML 文档结构"></a>1. HTML 文档结构</h3><ul>
+<li><strong><code>&lt;!DOCTYPE html&gt;</code></strong> ：声明文档类型为 HTML5。</li>
+<li><strong><code>&lt;html&gt;</code></strong> ：根元素，整个 HTML 页面的容器。</li>
+<li><strong><code>&lt;head&gt;</code></strong> ：包含页面的元数据，如标题、字符编码、样式表链接等。<ul>
+<li><strong><code>&lt;title&gt;</code></strong> ：设置页面的标题，显示在浏览器的标题栏或标签页上。</li>
+<li><strong><code>&lt;meta&gt;</code></strong> ：定义文档的元信息，如字符集（<code>charset</code>）、描述（<code>name=&quot;description&quot;</code>）、关键词（<code>name=&quot;keywords&quot;</code>）。</li>
+</ul>
+</li>
+<li><strong><code>&lt;body&gt;</code></strong> ：包含页面的可见内容，如文本、图片、链接等。</li>
+</ul>
+<h3 id="2-基本标签"><a href="#2-基本标签" class="headerlink" title="2. 基本标签"></a>2. 基本标签</h3><ul>
+<li><strong>标题标签</strong> ：<code>&lt;h1&gt;</code> - <code>&lt;h6&gt;</code>，用于定义不同级别的标题，<code>&lt;h1&gt;</code> 是最高级别的标题，<code>&lt;h6&gt;</code> 是最低级别的标题。</li>
+<li><strong>段落标签</strong> ：<code>&lt;p&gt;</code>，用于定义段落文本。</li>
+<li><strong>换行标签</strong> ：<code>&lt;br&gt;</code>，用于在文本中强制换行。</li>
+<li><strong>水平线标签</strong> ：<code>&lt;hr&gt;</code>，用于在页面中插入一条水平线，分隔内容。</li>
+<li><strong>文本格式化标签</strong><ul>
+<li><strong>加粗</strong> ：<code>&lt;b&gt;</code> 或 <code>&lt;strong&gt;</code>，<code>&lt;strong&gt;</code> 语义上表示更重要的内容。</li>
+<li><strong>斜体</strong> ：<code>&lt;i&gt;</code> 或 <code>&lt;em&gt;</code>，<code>&lt;em&gt;</code> 语义上表示强调的内容。</li>
+<li><strong>下划线</strong> ：<code>&lt;u&gt;</code>。</li>
+<li><strong>删除线</strong> ：<code>&lt;s&gt;</code> 或 <code>&lt;del&gt;</code>，<code>&lt;del&gt;</code> 语义上表示已删除的内容。</li>
+</ul>
+</li>
+<li><strong>列表标签</strong><ul>
+<li><strong>无序列表</strong> ：<code>&lt;ul&gt;</code>，包含 <code>&lt;li&gt;</code> 列表项，用于创建无序列表，如项目符号列表。</li>
+<li><strong>有序列表</strong> ：<code>&lt;ol&gt;</code>，包含 <code>&lt;li&gt;</code> 列表项，用于创建有序列表，如数字列表。</li>
+<li><strong>自定义列表</strong> ：<code>&lt;dl&gt;</code>，包含 <code>&lt;dt&gt;</code>（定义术语）和 <code>&lt;dd&gt;</code>（定义描述），用于创建自定义列表。</li>
+</ul>
+</li>
+<li><strong>链接标签</strong><ul>
+<li><strong><code>&lt;a&gt;</code></strong> ：用于创建超链接。<code>href</code> 属性指定链接的目标地址，<code>target</code> 属性指定链接的打开方式（如 <code>_blank</code> 在新窗口打开）。</li>
+</ul>
+</li>
+<li><strong>图片标签</strong><ul>
+<li><strong><code>&lt;img&gt;</code></strong> ：用于插入图片。<code>src</code> 属性指定图片的源文件地址，<code>alt</code> 属性提供图片的替代文本，当图片无法显示时显示该文本。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-表格标签"><a href="#3-表格标签" class="headerlink" title="3. 表格标签"></a>3. 表格标签</h3><ul>
+<li><strong><code>&lt;table&gt;</code></strong> ：定义表格。常用属性：<ul>
+<li><code>border</code> ：设置表格的边框宽度。</li>
+<li><code>width</code> 和 <code>height</code> ：设置表格的宽度和高度。</li>
+</ul>
+</li>
+<li><strong><code>&lt;tr&gt;</code></strong> ：定义表格行。</li>
+<li><strong><code>&lt;td&gt;</code></strong> ：定义表格单元格。</li>
+<li><strong><code>&lt;th&gt;</code></strong> ：定义表格表头单元格，通常用于第一行或第一列，加粗显示并居中对齐。</li>
+</ul>
+<h3 id="4-表单标签"><a href="#4-表单标签" class="headerlink" title="4. 表单标签"></a>4. 表单标签</h3><ul>
+<li><strong><code>&lt;form&gt;</code></strong> ：定义表单，用于收集用户输入。常用属性：<ul>
+<li><code>action</code> ：指定表单提交的目标 URL。</li>
+<li><code>method</code> ：指定表单提交的方式，如 <code>get</code> 或 <code>post</code>。</li>
+</ul>
+</li>
+<li><strong>表单元素</strong><ul>
+<li><strong>文本输入框</strong> ：<code>&lt;input type=&quot;text&quot;&gt;</code>，用于输入单行文本。</li>
+<li><strong>密码输入框</strong> ：<code>&lt;input type=&quot;password&quot;&gt;</code>，用于输入密码，输入内容会被隐藏。</li>
+<li><strong>单选按钮</strong> ：<code>&lt;input type=&quot;radio&quot;&gt;</code>，用于从一组选项中选择一个选项，<code>name</code> 属性用于分组，<code>value</code> 属性指定选项的值。</li>
+<li><strong>复选框</strong> ：<code>&lt;input type=&quot;checkbox&quot;&gt;</code>，用于选择多个选项，<code>name</code> 属性用于分组，<code>value</code> 属性指定选项的值。</li>
+<li><strong>下拉列表</strong> ：<code>&lt;select&gt;</code> 包含 <code>&lt;option&gt;</code> 选项，用于创建下拉选择框。</li>
+<li><strong>文本域</strong> ：<code>&lt;textarea&gt;</code>，用于输入多行文本。常用属性：<ul>
+<li><code>name</code> ：指定名称。</li>
+<li><code>rows</code> 和 <code>cols</code> ：指定文本框的行数和列数。</li>
+<li><code>placeholder</code> ：指定提示文本。</li>
+</ul>
+</li>
+<li><strong>提交按钮</strong> ：<code>&lt;input type=&quot;submit&quot;&gt;</code> 或 <code>&lt;button type=&quot;submit&quot;&gt;</code>，用于提交表单数据。</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、HTML-语义化标签"><a href="#二、HTML-语义化标签" class="headerlink" title="二、HTML 语义化标签"></a>二、HTML 语义化标签</h2><ul>
+<li><strong><code>&lt;header&gt;</code></strong> ：表示页面或区域的头部，通常包含网站标志、导航菜单等。</li>
+<li><strong><code>&lt;nav&gt;</code></strong> ：定义导航链接的区域，用于包含页面的导航菜单。</li>
+<li><strong><code>&lt;main&gt;</code></strong> ：表示页面的主要内容区域，一个页面只能有一个 <code>&lt;main&gt;</code> 元素。</li>
+<li><strong><code>&lt;article&gt;</code></strong> ：表示独立的、完整的内容块，如博客文章、新闻报道等。</li>
+<li><strong><code>&lt;section&gt;</code></strong> ：定义文档中的一个区域，用于对页面内容进行分组。</li>
+<li><strong><code>&lt;aside&gt;</code></strong> ：表示页面的侧边栏内容，通常包含与页面主要内容相关的补充信息。</li>
+<li><strong><code>&lt;footer&gt;</code></strong> ：表示页面或区域的底部，通常包含版权信息、联系方式等。</li>
+</ul>
+<h2 id="三、HTML5-新特性"><a href="#三、HTML5-新特性" class="headerlink" title="三、HTML5 新特性"></a>三、HTML5 新特性</h2><ul>
+<li><strong>语义化标签</strong> ：如上文所述，增强了网页的语义化结构，有助于搜索引擎优化和屏幕阅读器的解析。</li>
+<li><strong>多媒体标签</strong><ul>
+<li><strong><code>&lt;video&gt;</code></strong> ：定义视频播放器。常用属性：<ul>
+<li><code>src</code> ：指定视频文件的路径。</li>
+<li><code>controls</code> ：显示播放控件。</li>
+<li><code>width</code> 和 <code>height</code> ：设置视频的宽度和高度。</li>
+<li>支持的视频格式：MP4、WebM、Ogg。</li>
+</ul>
+</li>
+<li><strong><code>&lt;audio&gt;</code></strong> ：定义音频播放器。常用属性：<ul>
+<li><code>src</code> ：指定音频文件的路径。</li>
+<li><code>controls</code> ：显示播放控件。</li>
+<li>支持的音频格式：MP3、WAV、OGG。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>表单新类型</strong><ul>
+<li><code>date</code> ：日期选择器。</li>
+<li><code>time</code> ：时间选择器。</li>
+<li><code>datetime-local</code> ：本地日期和时间选择器。</li>
+<li><code>month</code> ：月份选择器。</li>
+<li><code>week</code> ：周选择器。</li>
+<li><code>number</code> ：数字输入框，可设置最小值、最大值和步长。</li>
+<li><code>range</code> ：滑动条输入框，可设置最小值、最大值和步长。</li>
+<li><code>color</code> ：颜色选择器。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><h2 id="四、CSS-基础"><a href="#四、CSS-基础" class="headerlink" title="四、CSS 基础"></a>四、CSS 基础</h2><h3 id="1-CSS-引入方式"><a href="#1-CSS-引入方式" class="headerlink" title="1. CSS 引入方式"></a>1. CSS 引入方式</h3><ul>
+<li><strong>内联样式</strong> ：在 HTML 元素中使用 <code>style</code> 属性直接设置样式，如 <code>&lt;p style=&quot;color: red;&quot;&gt;这是红色文本&lt;/p&gt;</code>。</li>
+<li><strong>内部样式表</strong> ：在 HTML 文档的 <code>&lt;head&gt;</code> 部分使用 <code>&lt;style&gt;</code> 标签定义样式，如 <code>&lt;style&gt;p &#123; color: blue; &#125;&lt;/style&gt;</code>。</li>
+<li><strong>外部样式表</strong> ：创建独立的 CSS 文件（如 <code>styles.css</code>），然后在 HTML 文档的 <code>&lt;head&gt;</code> 部分使用 <code>&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;</code> 引入。</li>
+</ul>
+<h3 id="2-CSS-选择器"><a href="#2-CSS-选择器" class="headerlink" title="2. CSS 选择器"></a>2. CSS 选择器</h3><ul>
+<li><strong>标签选择器</strong> ：根据 HTML 标签名选择元素，如 <code>p &#123; color: green; &#125;</code> 会选择所有的 <code>&lt;p&gt;</code> 元素。</li>
+<li><strong>类选择器</strong> ：以 <code>.</code> 开头，根据元素的 <code>class</code> 属性值选择元素，如 <code>.highlight &#123; background-color: yellow; &#125;</code> 会选择所有 <code>class</code> 为 <code>highlight</code> 的元素。</li>
+<li><strong>ID 选择器</strong> ：以 <code>#</code> 开头，根据元素的 <code>id</code> 属性值选择元素，如 <code>#main-content &#123; width: 800px; &#125;</code> 会选择 <code>id</code> 为 <code>main-content</code> 的元素。</li>
+<li><strong>通用选择器</strong> ：<code>*</code>，选择所有元素，如 <code>* &#123; margin: 0; padding: 0; &#125;</code>。</li>
+<li><strong>组合选择器</strong><ul>
+<li><strong>后代选择器</strong> ：如 <code>div p</code> 选择 <code>&lt;div&gt;</code> 元素内的所有 <code>&lt;p&gt;</code> 元素。</li>
+<li><strong>子元素选择器</strong> ：如 <code>div &gt; p</code> 选择 <code>&lt;div&gt;</code> 元素的直接子 <code>&lt;p&gt;</code> 元素。</li>
+<li><strong>相邻兄弟选择器</strong> ：如 <code>h1 + p</code> 选择紧跟在 <code>&lt;h1&gt;</code> 元素后的 <code>&lt;p&gt;</code> 元素。</li>
+<li><strong>通用兄弟选择器</strong> ：如 <code>h1 ~ p</code> 选择在 <code>&lt;h1&gt;</code> 元素之后的所有 <code>&lt;p&gt;</code> 元素。</li>
+</ul>
+</li>
+<li><strong>属性选择器</strong> ：根据 HTML 元素的属性值选择元素，如 <code>a[href=&quot;https://www.example.com&quot;] &#123; color: blue; &#125;</code> 选择所有 <code>href</code> 属性值为 <code>https://www.example.com</code> 的 <code>&lt;a&gt;</code> 标签。</li>
+</ul>
+<h3 id="3-CSS-属性"><a href="#3-CSS-属性" class="headerlink" title="3. CSS 属性"></a>3. CSS 属性</h3><ul>
+<li><strong>文本属性</strong><ul>
+<li><code>color</code> ：设置文本颜色。</li>
+<li><code>font-size</code> ：设置字体大小。</li>
+<li><code>font-family</code> ：设置字体族。</li>
+<li><code>text-align</code> ：设置文本对齐方式：<code>left</code>、<code>right</code>、<code>center</code>、<code>justify</code>。</li>
+<li><code>text-decoration</code> ：设置文本装饰，如下划线（<code>underline</code>）、删除线（<code>line-through</code>）等。</li>
+<li><code>line-height</code> ：设置行高。</li>
+</ul>
+</li>
+<li><strong>盒模型属性</strong><ul>
+<li><code>width</code> 和 <code>height</code> ：设置元素的宽度和高度。</li>
+<li><code>padding</code> ：设置元素的内边距，可分别设置上、右、下、左的内边距。</li>
+<li><code>margin</code> ：设置元素的外边距，可分别设置上、右、下、左的外边距。</li>
+<li><code>border</code> ：设置元素边框，可细分为 <code>border-style</code>、<code>border-width</code>、<code>border-color</code> 等。</li>
+<li><code>box-sizing</code> ：定义盒模型的计算方式，<code>content-box</code>（默认，宽度和高度只包括内容区域）或 <code>border-box</code>（宽度和高度包括内容区域、内边距和边框）。</li>
+</ul>
+</li>
+<li><strong>背景属性</strong><ul>
+<li><code>background-color</code> ：设置背景颜色。</li>
+<li><code>background-image</code> ：设置背景图片。</li>
+<li><code>background-repeat</code> ：设置背景图片的重复方式，如 <code>repeat</code>、<code>no-repeat</code> 等。</li>
+<li><code>background-position</code> ：设置背景图片的位置。</li>
+<li><code>background-size</code> ：设置背景图片的大小。</li>
+<li><code>background</code> ：综合设置背景属性。</li>
+</ul>
+</li>
+<li><strong>定位属性</strong><ul>
+<li><code>position</code> ：设置元素的定位方式，<code>static</code>（默认，无特殊定位）、<code>relative</code>（相对定位）、<code>absolute</code>（绝对定位）、<code>fixed</code>（固定定位）、<code>sticky</code>（粘性定位）。</li>
+<li><code>top</code>、<code>right</code>、<code>bottom</code>、<code>left</code> ：设置定位元素的位置。</li>
+<li><code>z-index</code> ：设置元素的堆叠顺序，数值越大，元素越在上层显示。</li>
+</ul>
+</li>
+<li><strong>显示属性</strong><ul>
+<li><code>display</code> ：设置元素的显示方式，如 <code>block</code>、<code>inline</code>、<code>inline-block</code>、<code>none</code> 等。</li>
+</ul>
+</li>
+</ul>
+<h2 id="五、CSS-高级特性"><a href="#五、CSS-高级特性" class="headerlink" title="五、CSS 高级特性"></a>五、CSS 高级特性</h2><h3 id="1-CSS-盒模型"><a href="#1-CSS-盒模型" class="headerlink" title="1. CSS 盒模型"></a>1. CSS 盒模型</h3><ul>
+<li><strong>标准盒模型</strong> ：元素的 <code>width</code> 和 <code>height</code> 只包括内容区域，<code>padding</code>、<code>border</code> 和 <code>margin</code> 在其外部。</li>
+<li><strong>怪异盒模型（IE 盒模型）</strong> ：元素的 <code>width</code> 和 <code>height</code> 包括内容区域、<code>padding</code> 和 <code>border</code>，<code>margin</code> 在其外部。可以通过 <code>box-sizing</code> 属性来设置盒模型，<code>box-sizing: content-box</code> 为标准盒模型，<code>box-sizing: border-box</code> 为怪异盒模型。</li>
+</ul>
+<h3 id="2-CSS-浮动"><a href="#2-CSS-浮动" class="headerlink" title="2. CSS 浮动"></a>2. CSS 浮动</h3><ul>
+<li><strong><code>float</code> 属性</strong> ：如 <code>float: left</code> 或 <code>float: right</code> 用于使元素向左或向右浮动，脱离标准文档流。</li>
+<li><strong>清除浮动</strong> ：使用 <code>clear</code> 属性，如 <code>clear: both</code> 来清除浮动对周围元素的影响，防止父元素塌陷。</li>
+</ul>
+<h3 id="3-CSS-定位"><a href="#3-CSS-定位" class="headerlink" title="3. CSS 定位"></a>3. CSS 定位</h3><ul>
+<li><strong><code>static</code></strong> ：默认定位方式，元素按照正常的文档流排列。</li>
+<li><strong><code>relative</code></strong> ：相对定位，元素相对于其正常位置进行偏移，在文档流中仍占据原来的空间。</li>
+<li><strong><code>absolute</code></strong> ：绝对定位，元素相对于最近的已定位祖先元素（<code>position</code> 不是 <code>static</code> 的元素）进行定位，脱离标准文档流。</li>
+<li><strong><code>fixed</code></strong> ：固定定位，元素相对于浏览器窗口进行定位，脱离标准文档流。</li>
+<li><strong><code>sticky</code></strong> ：粘性定位，元素在滚动过程中根据位置变化表现为相对定位和固定定位的结合。</li>
+</ul>
+<h3 id="4-CSS-弹性盒模型（Flexbox）"><a href="#4-CSS-弹性盒模型（Flexbox）" class="headerlink" title="4. CSS 弹性盒模型（Flexbox）"></a>4. CSS 弹性盒模型（Flexbox）</h3><ul>
+<li><strong>使用方法</strong> ：将容器设置为弹性容器，<code>display: flex</code>。</li>
+<li><strong>弹性容器的属性</strong><ul>
+<li><code>flex-direction</code> ：设置主轴方向，如 <code>row</code>、<code>row-reverse</code>、<code>column</code>、<code>column-reverse</code>。</li>
+<li><code>justify-content</code> ：设置主轴上子元素的对齐方式，如 <code>flex-start</code>、<code>flex-end</code>、<code>center</code>、<code>space-between</code>、<code>space-around</code>。</li>
+<li><code>align-items</code> ：设置交叉轴上子元素的对齐方式，如 <code>flex-start</code>、<code>flex-end</code>、<code>center</code>、<code>stretch</code>、<code>baseline</code>。</li>
+</ul>
+</li>
+<li><strong>弹性子元素的属性</strong><ul>
+<li><code>flex-grow</code> ：设置子元素的增长因子。</li>
+<li><code>flex-shrink</code> ：设置子元素的收缩因子。</li>
+<li><code>flex-basis</code> ：设置子元素的初始大小。</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-CSS-网格布局（Grid）"><a href="#5-CSS-网格布局（Grid）" class="headerlink" title="5. CSS 网格布局（Grid）"></a>5. CSS 网格布局（Grid）</h3><ul>
+<li><strong>使用方法</strong> ：将容器设置为网格容器，<code>display: grid</code>。</li>
+<li><strong>网格容器的属性</strong><ul>
+<li><code>grid-template-columns</code> ：定义列的大小，如 <code>grid-template-columns: 100px 200px auto;</code>。</li>
+<li><code>grid-template-rows</code> ：定义行的大小。</li>
+<li><code>grid-gap</code> ：设置网格间隙。</li>
+</ul>
+</li>
+<li><strong>网格项的属性</strong><ul>
+<li><code>grid-column-start</code>、<code>grid-column-end</code>、<code>grid-row-start</code>、<code>grid-row-end</code> ：用于指定网格项在网格中的位置。</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-CSS-动画与过渡"><a href="#6-CSS-动画与过渡" class="headerlink" title="6. CSS 动画与过渡"></a>6. CSS 动画与过渡</h3><ul>
+<li><strong>过渡（Transition）</strong><ul>
+<li><code>transition-property</code> ：指定应用过渡效果的 CSS 属性。</li>
+<li><code>transition-duration</code> ：指定过渡效果的持续时间。</li>
+<li><code>transition-timing-function</code> ：指定过渡效果的时间函数，如 <code>ease</code>、<code>linear</code>、<code>ease-in</code>、<code>ease-out</code>、<code>ease-in-out</code>。</li>
+<li><code>transition-delay</code> ：指定过渡效果的延迟时间。</li>
+<li><code>transition</code> ：综合设置过渡属性。</li>
+</ul>
+</li>
+<li><strong>动画（Animation）</strong><ul>
+<li><code>@keyframes</code> ：定义动画的关键帧，指定在动画过程中元素的样式变化。</li>
+<li><code>animation-name</code> ：指定动画的名称，对应 <code>@keyframes</code> 中定义的动画。</li>
+<li><code>animation-duration</code> ：指定动画的持续时间。</li>
+<li><code>animation-timing-function</code> ：指定动画的时间函数。</li>
+<li><code>animation-delay</code> ：指定动画的延迟时间。</li>
+<li><code>animation-iteration-count</code> ：指定动画的播放次数，如 <code>infinite</code> 表示无限次播放。</li>
+<li><code>animation-direction</code> ：指定动画的播放方向，如 <code>normal</code>、<code>reverse</code>、<code>alternate</code>、<code>alternate-reverse</code>。</li>
+<li><code>animation-play-state</code> ：指定动画的播放状态，如 <code>running</code>、<code>paused</code>。</li>
+<li><code>animation</code> ：综合设置动画属性。</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-CSS-响应式设计"><a href="#7-CSS-响应式设计" class="headerlink" title="7. CSS 响应式设计"></a>7. CSS 响应式设计</h3><ul>
+<li><strong>媒体查询（Media Query）</strong><ul>
+<li>使用 <code>@media</code> 查询不同的设备类型和屏幕特征，如屏幕宽度、高度、分辨率等，为不同的设备应用不同的 CSS 样式。</li>
+<li>常见的媒体查询条件：<ul>
+<li><code>max-width</code> ：最大屏幕宽度。</li>
+<li><code>min-width</code> ：最小屏幕宽度。</li>
+<li><code>orientation</code> ：屏幕方向，<code>portrait</code>（竖屏）或 <code>landscape</code>（横屏）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>响应式布局技巧</strong><ul>
+<li>使用百分比宽度：为元素设置百分比宽度，使其在不同屏幕尺寸下自动调整大小。</li>
+<li>使用弹性布局（Flexbox）：通过 <code>display: flex</code> 和相关属性实现灵活的布局。</li>
+<li>使用网格布局（Grid）：通过 <code>display: grid</code> 和相关属性创建网格布局。</li>
+<li>使用图片的响应式处理：为图片设置 <code>max-width: 100%;</code> 和 <code>height: auto;</code>，使其在不同屏幕尺寸下自动调整大小并保持比例。</li>
+</ul>
+</li>
+</ul>
+
         </div>
 
         
@@ -209,8 +534,10 @@
         </section>
         <section class="post-nav">
             
+                <a class="prev" rel="prev" href="/2025/02/21/winter-vacation-study-summary/">winter vacation study summary 寒假学习总结</a>
             
-            <a class="next" rel="next" href="/2025/02/17/set-up-my-own-blog/">set up my own blog</a>
+            
+            <a class="next" rel="next" href="/2025/02/17/set-up-my-own-blog/">set up my own blog 创建个人博客</a>
             
         </section>
 
