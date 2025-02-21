@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="liminghao">
+
+
+
+
+
+<title>make dataset by labelimg 使用labelimg制作数据集 | minghao&#39;s blog -Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Minghao Li&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Minghao Li&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">make dataset by labelimg 使用labelimg制作数据集</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">liminghao</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">February 21, 2025&nbsp;&nbsp;14:38:23</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/learn-new-things/">learn new things</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ok，现在是2025.2.21 19:39，来写一下怎么制作数据集，这里的数据集是图像的数据集，分为两部分，使用labelimg标注图像完成数据集，再用python代码将数据集划分为训练集和验证集</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>csdn参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/StopAndGoyyy/article/details/139906637?spm=1001.2014.3001.5506">使用labelimg进行图片数据标签制作</a></li>
+</ul>
+<h2 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h2><ol>
+<li><a href="#%E4%BD%BF%E7%94%A8labelimg%E5%88%B6%E4%BD%9C%E6%95%B0%E6%8D%AE%E9%9B%86">使用labelimg制作数据集</a></li>
+<li><a href="#%E5%88%92%E5%88%86%E6%95%B0%E6%8D%AE%E9%9B%86">划分数据集</a></li>
+</ol>
+<hr>
+<h1 id="使用labelimg制作数据集"><a href="#使用labelimg制作数据集" class="headerlink" title="使用labelimg制作数据集"></a>使用labelimg制作数据集</h1><h3 id="准备图片集"><a href="#准备图片集" class="headerlink" title="准备图片集"></a>准备图片集</h3><ol>
+<li>网上寻找相关图片放入images文件夹</li>
+<li>在images同目录下创建labels和classes.txt</li>
+<li>classes.txt内写入待检测物体的名称，一行一个</li>
+</ol>
+<h3 id="安装labelimg"><a href="#安装labelimg" class="headerlink" title="安装labelimg"></a>安装labelimg</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install labelimg</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用labelimg"><a href="#使用labelimg" class="headerlink" title="使用labelimg"></a>使用labelimg</h3><ol>
+<li><p>运行labelimg</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">labelimg D:\a安建大\实验室\机器人创新实验室\三轮考核\c第三次任务__模式识别\datas\images classes.txt</span><br></pre></td></tr></table></figure>
+<p>将路径替换为你的真实路径</p>
+</li>
+<li><p>labelimg基础<br><img src="/images/make-dataset-by-labelimg/labelimg%E5%9F%BA%E7%A1%80.png" alt="labelimg基础"></p>
+</li>
+</ol>
+<ul>
+<li>快捷键<ul>
+<li>d：下一张</li>
+<li>a：上一张</li>
+<li>w：创建矩形</li>
+</ul>
+</li>
+<li>注意<ul>
+<li>矩形框尽量完整的包围物体</li>
+<li>保存格式</li>
+<li>View里面可以开启自动保存，当切换下一张时自动保存</li>
+<li>若要切换识别新的图片，注意需要指定新的保存路径，否则会加载上一次的保存路径</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="划分数据集"><a href="#划分数据集" class="headerlink" title="划分数据集"></a>划分数据集</h1><p>运行以下代码划分数据集，注意备份原始文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line"><span class="comment"># 原始图像和标注文件所在目录</span></span><br><span class="line">source_image_dir = <span class="string">&quot;images&quot;</span></span><br><span class="line">source_label_dir = <span class="string">&quot;labels&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 划分后的训练集和验证集目录</span></span><br><span class="line">train_image_dir = <span class="string">&quot;train/images&quot;</span></span><br><span class="line">train_label_dir = <span class="string">&quot;train/labels&quot;</span></span><br><span class="line">val_image_dir = <span class="string">&quot;val/images&quot;</span></span><br><span class="line">val_label_dir = <span class="string">&quot;val/labels&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建目录</span></span><br><span class="line">os.makedirs(train_image_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line">os.makedirs(train_label_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line">os.makedirs(val_image_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line">os.makedirs(val_label_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取图像文件列表</span></span><br><span class="line">image_files = os.listdir(source_image_dir)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机打乱图像文件列表</span></span><br><span class="line">random.shuffle(image_files)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算划分索引</span></span><br><span class="line">split_index = <span class="built_in">int</span>(<span class="number">0.8</span> * <span class="built_in">len</span>(image_files))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 划分训练集和验证集</span></span><br><span class="line">train_files = image_files[:split_index]</span><br><span class="line">val_files = image_files[split_index:]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移动文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">move_files</span>(<span class="params">files, source_image_dir, source_label_dir, target_image_dir, target_label_dir</span>):</span><br><span class="line">    <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">        image_path = os.path.join(source_image_dir, file)</span><br><span class="line">        label_path = os.path.join(source_label_dir, os.path.splitext(file)[<span class="number">0</span>] + <span class="string">&quot;.txt&quot;</span>)</span><br><span class="line">        shutil.move(image_path, os.path.join(target_image_dir, file))</span><br><span class="line">        shutil.move(label_path, os.path.join(target_label_dir, os.path.splitext(file)[<span class="number">0</span>] + <span class="string">&quot;.txt&quot;</span>))</span><br><span class="line"></span><br><span class="line">move_files(train_files, source_image_dir, source_label_dir, train_image_dir, train_label_dir)</span><br><span class="line">move_files(val_files, source_image_dir, source_label_dir, val_image_dir, val_label_dir)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;数据集划分完成！&quot;</span>)</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>liminghao</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2025/02/21/make-dataset-by-labelimg/">http://example.com/2025/02/21/make-dataset-by-labelimg/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2025 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tag/dataset/"># dataset</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/02/21/Training-and-application-of-yolov11/">Training and application of yolov11 训练和应用yolov11模型</a>
+            
+            
+            <a class="next" rel="next" href="/2025/02/21/winter-vacation-study-summary/">winter vacation study summary 寒假学习总结</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© liminghao | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
