@@ -140,7 +140,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/images/redefine-og.webp">
 <meta property="article:published_time" content="2025-02-17T12:16:04.000Z">
-<meta property="article:modified_time" content="2025-02-21T11:41:55.210Z">
+<meta property="article:modified_time" content="2025-07-26T08:26:34.135Z">
 <meta property="article:author" content="liminghao">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="blog">
@@ -724,8 +724,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-02-21 19:41:55</span>
-            <span class="mobile">2025-02-21 19:41:55</span>
+            <span class="desktop">2025-07-26 16:26:34</span>
+            <span class="mobile">2025-07-26 16:26:34</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -936,7 +936,7 @@
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host ssh.github.com</span><br><span class="line">  HostName ssh.github.com</span><br><span class="line">  User git</span><br><span class="line">  Port 443</span><br><span class="line">  IdentityFile C:/Users/31401/.ssh/id_github_rsa</span><br><span class="line">  IdentitiesOnly <span class="built_in">yes</span></span><br></pre></td></tr></table></figure></div>
 <p>由于22端口被占用，所以改用443端口</p>
 <h3 id="配置GitHub的ssh"><a href="#配置GitHub的ssh" class="headerlink" title="配置GitHub的ssh"></a>配置GitHub的ssh</h3><ol>
-<li><p>settings-SSH and GPG keys-Kay HSS key</p>
+<li><p>点击头像-settings-SSH and GPG keys-Kay HSS key</p>
 </li>
 <li><p>分别填写Title和id_rsa.pub</p>
 </li>
@@ -952,7 +952,9 @@
 <h3 id="安装hexo-deployer-git插件"><a href="#安装hexo-deployer-git插件" class="headerlink" title="安装hexo-deployer-git插件"></a>安装hexo-deployer-git插件</h3><p>在刚刚创建的博客文件夹下再次打开<code>open git bash here</code>，安装 <code>hexo-deployer-git</code> 插件</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></div>
 
-<h3 id="配置deploy"><a href="#配置deploy" class="headerlink" title="配置deploy"></a>配置deploy</h3><p>打开主界面的<code>_config.yml</code>，在最底下配置deploy<br>deploy:<br>  type: git<br>  repo: <a class="link"   href="mailto:&#x67;&#105;&#x74;&#x40;&#x73;&#x73;&#x68;&#46;&#103;&#105;&#116;&#x68;&#x75;&#98;&#x2e;&#x63;&#111;&#109;" >git@ssh.github.com<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>:CREATE-MENG&#x2F;create-meng.github.io.git<br>  branch: main</p>
+<h3 id="配置deploy"><a href="#配置deploy" class="headerlink" title="配置deploy"></a>配置deploy</h3><p>打开主界面的<code>_config.yml</code>，在最底下配置deploy</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@ssh.github.com:CREATE-MENG/create-meng.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure></div>
+
 <p><strong>YAML 文件对缩进非常敏感，deploy 下的子项（如 type、repo、branch）必须保持一致的缩进，通常使用两个空格。</strong></p>
 <h3 id="上传静态文件到GitHub"><a href="#上传静态文件到GitHub" class="headerlink" title="上传静态文件到GitHub"></a>上传静态文件到GitHub</h3><p>执行</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></div>
@@ -1159,7 +1161,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-02-21 19:41:55
+                    :</strong> 2025-07-26 16:26:34
             </li>
         
         <li>
