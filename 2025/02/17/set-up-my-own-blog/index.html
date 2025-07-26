@@ -1,232 +1,798 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <meta name="author" content="liminghao">
-
-
-
-
-
-<title>set up my own blog 创建个人博客 | minghao&#39;s blog -Hexo</title>
-
-
-
-    <link rel="icon" href="/favicon.ico">
-
-
-
-
-    <!-- stylesheets list from _config.yml -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
     
-    <link rel="stylesheet" href="/css/style.css">
+    <meta name="author" content="create-meng">
     
-
-
-
-    <!-- scripts list from _config.yml -->
-    
-    <script src="/js/script.js"></script>
-    
-    <script src="/js/tocbot.min.js"></script>
-    
-
-
-
-    
-    
-        
-    
-
-
-<meta name="generator" content="Hexo 7.3.0"></head>
-
-<body>
+    <!-- Completely eliminate flash of wrong theme -->
     <script>
-        // this function is used to check current theme before page loaded.
-        (() => {
-            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
-            const isDark = currentTheme === 'dark';
-            const pagebody = document.getElementsByTagName('body')[0]
-            if (isDark) {
-                pagebody.classList.add('dark-theme');
-                // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set data attribute for CSS variables
+                root.setAttribute("data-theme", theme);
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes once DOM is ready
+            if (document.readyState !== "loading") {
+                document.body.classList.add(theme + "-mode");
             } else {
-                pagebody.classList.remove('dark-theme');
-                // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+                document.addEventListener("DOMContentLoaded", () => {
+                    document.body.classList.add(theme + "-mode");
+                    document.body.classList.remove((theme === DARK ? LIGHT : DARK) + "-mode");
+                });
             }
         })();
     </script>
-
-    <div class="wrapper">
-        <header>
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-header header-logo"><a href="/">Minghao Li&#39;s Blog</a></div>
-            <div class="menu navbar-right">
-                
-                    <a class="menu-item" href="/archives">Posts</a>
-                
-                    <a class="menu-item" href="/category">Categories</a>
-                
-                    <a class="menu-item" href="/tag">Tags</a>
-                
-                    <a class="menu-item" href="/about">About</a>
-                
-                <input id="switch_default" type="checkbox" class="switch_default">
-                <label for="switch_default" class="toggleBtn"></label>
-            </div>
-        </div>
-    </nav>
-
     
-    <nav class="navbar-mobile" id="nav-mobile">
-        <div class="container">
-            <div class="navbar-header">
-                <div>
-                    <a href="/">Minghao Li&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
-                </div>
-                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
-            </div>
-            <div class="menu" id="mobile-menu">
-                
-                    <a class="menu-item" href="/archives">Posts</a>
-                
-                    <a class="menu-item" href="/category">Categories</a>
-                
-                    <a class="menu-item" href="/tag">Tags</a>
-                
-                    <a class="menu-item" href="/about">About</a>
-                
-            </div>
-        </div>
-    </nav>
-
-</header>
-<script>
-    var mobileBtn = function f() {
-        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
-        var mobileMenu = document.getElementById("mobile-menu");
-        if(toggleMenu.classList.contains("active")){
-           toggleMenu.classList.remove("active")
-            mobileMenu.classList.remove("active")
-        }else{
-            toggleMenu.classList.add("active")
-            mobileMenu.classList.add("active")
+    <!-- Critical CSS to prevent flash -->
+    <style>
+        :root[data-theme="dark"] {
+            --background-color: #202124;
+            --background-color-transparent: rgba(32, 33, 36, 0.6);
+            --second-background-color: #2d2e32;
+            --third-background-color: #34353a;
+            --third-background-color-transparent: rgba(32, 33, 36, 0.6);
+            --primary-color: #0066CC;
+            --first-text-color: #ffffff;
+            --second-text-color: #eeeeee;
+            --third-text-color: #bebec6;
+            --fourth-text-color: #999999;
+            --default-text-color: #bebec6;
+            --invert-text-color: #373D3F;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --selection-color: #0066CC;
+            --shadow-color-1: rgba(255, 255, 255, 0.08);
+            --shadow-color-2: rgba(255, 255, 255, 0.05);
         }
-    }
-</script>
-            <div class="main">
-                <div class="container">
+        
+        :root[data-theme="light"] {
+            --background-color: #fff;
+            --background-color-transparent: rgba(255, 255, 255, 0.6);
+            --second-background-color: #f8f8f8;
+            --third-background-color: #f2f2f2;
+            --third-background-color-transparent: rgba(241, 241, 241, 0.6);
+            --primary-color: #0066CC;
+            --first-text-color: #16171a;
+            --second-text-color: #2f3037;
+            --third-text-color: #5e5e5e;
+            --fourth-text-color: #eeeeee;
+            --default-text-color: #373D3F;
+            --invert-text-color: #bebec6;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --selection-color: #0066CC;
+            --shadow-color-1: rgba(0, 0, 0, 0.08);
+            --shadow-color-2: rgba(0, 0, 0, 0.05);
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--default-text-color);
+        }
+        
+        /* Apply body classes as soon as DOM is ready */
+        :root[data-theme="dark"] body {
+            background-color: var(--background-color);
+            color: var(--default-text-color);
+        }
+    </style>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/02/17/set-up-my-own-blog/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
     
     
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
-        <a onclick="go_top()">Back to top</a>
-        <a onclick="go_bottom()">Go to bottom</a>
-    </div>
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="set up my own blog 创建个人博客">
+<meta property="og:url" content="http://example.com/2025/02/17/set-up-my-own-blog/index.html">
+<meta property="og:site_name" content="minghao&#39;s blog -Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2025-02-17T12:16:04.000Z">
+<meta property="article:modified_time" content="2025-02-21T11:41:55.210Z">
+<meta property="article:author" content="liminghao">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="connect github">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            set up my own blog 创建个人博客 | create-meng&#39;s blog
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+        
+<script src="/js/build/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"create-meng's blog","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Github":"https://github.com/create-meng","Blog":"https://create-meng.github.io"}}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+        
+<link rel="stylesheet" href="/fontawesome/thin.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
 </div>
 
-<script>
-    var tocbot_timer;
-    var DEPTH_MAX = 6; // 为 6 时展开所有
-    var tocbot_default_config = {
-        tocSelector: '.tocbot-list',
-        contentSelector: '.post-content',
-        headingSelector: 'h1, h2, h3, h4, h5',
-        orderedList: false,
-        scrollSmooth: true,
-        onClick: extend_click,
-    };
-
-    function extend_click() {
-        clearTimeout(tocbot_timer);
-        tocbot_timer = setTimeout(function() {
-            tocbot.refresh(obj_merge(tocbot_default_config, {
-                hasInnerContainers: true
-            }));
-        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+<style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
     }
 
-    document.ready(function() {
-        tocbot.init(obj_merge(tocbot_default_config, {
-            collapseDepth: 1
-        }));
-    });
-
-    function expand_toc() {
-        var b = document.querySelector('.tocbot-toc-expand');
-        var expanded = b.getAttribute('data-expanded');
-        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
-        tocbot.refresh(obj_merge(tocbot_default_config, {
-            collapseDepth: expanded ? 1 : DEPTH_MAX
-        }));
-        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
     }
 
-    function go_top() {
-        window.scrollTo(0, 0);
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
     }
 
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
     }
 
-    function obj_merge(target, source) {
-        for (var item in source) {
-            if (source.hasOwnProperty(item)) {
-                target[item] = source[item];
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        create-meng&#39;s blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({ loop: true })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [20, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                filter: ['blur(5px)', 'blur(0px)'],
+                easing: "easeOutExpo",
+                duration: 1200,
+                delay: (el, i) => 300 + 20 * i,
+            })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [0, -20],
+                opacity: [1, 0],
+                filter: ['blur(0px)', 'blur(5px)'],
+                easing: "easeInExpo",
+                duration: 1000,
+                delay: (el, i) => 15 * i,
+                complete: function() {
+                    hidePreloader();
+                }
+            }, '-=700');
+
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
             }
         }
-        return target;
-    }
-</script>
-    
 
-    
-    <article class="post-wrap">
-        <header class="post-header">
-            <h1 class="post-title">set up my own blog 创建个人博客</h1>
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
             
-                <div class="post-meta">
-                    
-                        Author: <a itemprop="author" rel="author" href="/">liminghao</a>
-                    
+            <a class="logo-title" href="/">
+                
+                create-meng&#39;s blog
+                
+            </a>
+        </div>
 
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
                     
-                        <span class="post-time">
-                        Date: <a href="#">February 17, 2025&nbsp;&nbsp;20:16:04</a>
-                        </span>
-                    
-                    
-                        <span class="post-category">
-                    Category:
+                        
                             
-                                <a href="/categories/learn-new-things/">learn new things</a>
-                            
-                        </span>
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
                     
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories"
+                                        >
+                                    <i class="fa-regular fa-folder fa-fw"></i>
+                                    CATEGORIES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    TAGS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/create-meng">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://create-meng.github.io">
+                                                    BLOG
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
                 </div>
-            
-        </header>
+            </div>
+        </div>
+    </div>
 
-        <div class="post-content">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ok呀，今天来写一下搭建博客和绑定域名的曲折历程，包括搭建&amp;部署服务器&amp;绑定域名</p>
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories"
+                        >
+                            <span>
+                                CATEGORIES
+                            </span>
+                            
+                                <i class="fa-regular fa-folder fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags"
+                        >
+                            <span>
+                                TAGS
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/create-meng">GITHUB</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://create-meng.github.io">BLOG</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tag">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">10</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">set up my own blog 创建个人博客</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">create-meng</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-02-17 20:16:04</span>
+        <span class="mobile">2025-02-17 20:16:04</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-02-21 19:41:55</span>
+            <span class="mobile">2025-02-21 19:41:55</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/learn-new-things/">learn new things</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tag/hexo/">hexo</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tag/blog/">blog</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tag/connect-github/">connect github</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ok呀，今天来写一下搭建博客和绑定域名的曲折历程，包括搭建&amp;部署服务器&amp;绑定域名</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li>csdn参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43883917/article/details/143885553?spm=1001.2014.3001.5506">参考的csdn搭建教程</a></li>
-<li>bilibili参考：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Eg41157tL?vd_source=caadc39979d45e601baf7f481a31727e">参考的B站搭建教程</a></li>
-<li>csdn参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38821611/article/details/132296172?spm=1001.2014.3001.5506">参考的csdn域名购买教程</a></li>
-<li>csdn参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40425640/article/details/129999245?ops_request_misc=&request_id=&biz_id=102&utm_term=%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D%E5%92%8Cgithub%E5%9C%B0%E5%9D%80&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-4-129999245.142%5Ev101%5Epc_search_result_base3&spm=1018.2226.3001.4187">参考的csdn域名解析教程</a></li>
+<li>csdn参考：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43883917/article/details/143885553?spm=1001.2014.3001.5506" >参考的csdn搭建教程<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li>bilibili参考：<a class="link"   target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Eg41157tL?vd_source=caadc39979d45e601baf7f481a31727e" >参考的B站搭建教程<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li>csdn参考：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38821611/article/details/132296172?spm=1001.2014.3001.5506" >参考的csdn域名购买教程<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li>csdn参考：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40425640/article/details/129999245?ops_request_misc=&request_id=&biz_id=102&utm_term=%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D%E5%92%8Cgithub%E5%9C%B0%E5%9D%80&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-4-129999245.142%5Ev101%5Epc_search_result_base3&spm=1018.2226.3001.4187" >参考的csdn域名解析教程<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
 </ul>
 <h2 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h2><ol>
 <li><a href="#%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2">搭建博客</a></li>
@@ -237,41 +803,91 @@
 <li><a href="#bug%E6%B1%87%E6%80%BB">bug汇总</a></li>
 </ol>
 <hr>
-<h1 id="搭建博客"><a href="#搭建博客" class="headerlink" title="搭建博客"></a>搭建博客</h1><h2 id="安装Git和Node-js"><a href="#安装Git和Node-js" class="headerlink" title="安装Git和Node.js"></a>安装Git和Node.js</h2><h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><h4 id="Git安装网址"><a href="#Git安装网址" class="headerlink" title="Git安装网址"></a><a target="_blank" rel="noopener" href="https://git-scm.com/downloads/win">Git安装网址</a></h4><p>点击此处下载文件</p>
+<h1 id="搭建博客"><a href="#搭建博客" class="headerlink" title="搭建博客"></a>搭建博客</h1><h2 id="安装Git和Node-js"><a href="#安装Git和Node-js" class="headerlink" title="安装Git和Node.js"></a>安装Git和Node.js</h2><h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><h4 id="Git安装网址"><a href="#Git安装网址" class="headerlink" title="Git安装网址"></a><a class="link"   target="_blank" rel="noopener" href="https://git-scm.com/downloads/win" >Git安装网址<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h4><p>点击此处下载文件</p>
 <ol>
-<li><p><img src="/images/set-up-my-own-blog/gti%E5%AE%89%E8%A3%85%E7%95%8C%E9%9D%A2.png" alt="Git安装界面"></p>
+<li><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/gti%E5%AE%89%E8%A3%85%E7%95%8C%E9%9D%A2.png"
+                      alt="Git安装界面"
+                ></p>
 </li>
-<li><p><img src="/images/set-up-my-own-blog/git%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A41.png" alt="Git安装步骤1">下载后双击运行显示</p>
+<li><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/git%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A41.png"
+                      alt="Git安装步骤1"
+                >下载后双击运行显示</p>
 </li>
 <li><p>后续点击默认或者推荐选项继续运行(本来有一篇csdn讲述了Git如何安装，可惜收藏后一不小心点到了取消收藏，然后前段时间配置域名又清除了搜索记录，找不到了(哭))</p>
 </li>
 </ol>
-<h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><h4 id="Node-js安装网址"><a href="#Node-js安装网址" class="headerlink" title="Node.js安装网址"></a><a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn">Node.js安装网址</a></h4><p>点击此处下载文件</p>
+<h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><h4 id="Node-js安装网址"><a href="#Node-js安装网址" class="headerlink" title="Node.js安装网址"></a><a class="link"   target="_blank" rel="noopener" href="https://nodejs.org/zh-cn" >Node.js安装网址<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h4><p>点击此处下载文件</p>
 <ol>
-<li><p><img src="/images/set-up-my-own-blog/Node.js%E5%AE%89%E8%A3%85%E7%95%8C%E9%9D%A2.png" alt="Node.js安装界面"></p>
+<li><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/Node.js%E5%AE%89%E8%A3%85%E7%95%8C%E9%9D%A2.png"
+                      alt="Node.js安装界面"
+                ></p>
 </li>
-<li><p><img src="/images/set-up-my-own-blog/Node;js%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A41.png" alt="Node.js安装步骤1">下载后双击运行显示</p>
+<li><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/Node;js%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A41.png"
+                      alt="Node.js安装步骤1"
+                >下载后双击运行显示</p>
 </li>
 <li><p>后续一切默认选项</p>
 </li>
 </ol>
-<h3 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git -v</span><br><span class="line">node -v</span><br></pre></td></tr></table></figure>
-<p>如图，显示版本号即安装成功<br><img src="/images/set-up-my-own-blog/git&node.js%E6%A3%80%E9%AA%8C.png" alt="git&amp;node.js检验">下载后双击运行显示</p>
+<h3 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git -v</span><br><span class="line">node -v</span><br></pre></td></tr></table></figure></div>
+<p>如图，显示版本号即安装成功<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/git&node.js%E6%A3%80%E9%AA%8C.png"
+                      alt="git&amp;node.js检验"
+                >下载后双击运行显示</p>
 <hr>
-<h2 id="安装和运行hexo"><a href="#安装和运行hexo" class="headerlink" title="安装和运行hexo"></a>安装和运行hexo</h2><h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h2 id="安装和运行hexo"><a href="#安装和运行hexo" class="headerlink" title="安装和运行hexo"></a>安装和运行hexo</h2><h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></div>
 <p>在git下执行命令安装hexo</p>
 <p>（ps：输入命令后长时间卡住无法安装成功，可参考以下解决方案<br>此时按下 Ctrl+C 停止当前命令，输入以下命令配置淘宝镜像</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure></div>
 <p>然后重新输入命令安装hexo）</p>
 <h3 id="初始化myblog"><a href="#初始化myblog" class="headerlink" title="初始化myblog"></a>初始化myblog</h3><p>创建myblog文件夹,然后,使用该命令初始化博客文件夹(加载时间较长)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure></div>
 
 <h4 id="bug1"><a href="#bug1" class="headerlink" title="bug1:"></a>bug1:</h4><p><em>博客初始化时不为空文件夹</em><br><em>FATAL （路径） not empty, please run <code>hexo init</code> on an empty folder and then copy your files into it</em><br><em>该bug可能为该目录不为空文件夹，或者这个目录已经有blog存在</em></p>
-<p><img src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%961.png" alt="博客初始化"><br><img src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%962.png" alt="博客初始化"><br>如图则初始化成功</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%961.png"
+                      alt="博客初始化"
+                ><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E5%8D%9A%E5%AE%A2%E5%88%9D%E5%A7%8B%E5%8C%962.png"
+                      alt="博客初始化"
+                ><br>如图则初始化成功</p>
 <h3 id="运行本地博客"><a href="#运行本地博客" class="headerlink" title="运行本地博客"></a>运行本地博客</h3><p>在<code>open git bash here</code>下运行并且点击（复制）链接到浏览器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p><img src="/images/set-up-my-own-blog/hexo%E8%BF%90%E8%A1%8C.png" alt="hexo 运行"><br>如图则可Ctrl+路径打开浏览器<br><img src="/images/set-up-my-own-blog/hexo%E6%89%93%E5%BC%80.png" alt="hexo 打开"><br>如图则成功打开hexo默认界面,路径为<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a></p>
-<h4 id="bug2"><a href="#bug2" class="headerlink" title="bug2:"></a>bug2:</h4><p><em>本地打开未设置端口</em><br><em><img src="/images/set-up-my-own-blog/hexo%E9%94%99%E8%AF%AF.png" alt="hexo 错误"></em><br><em>该bug为Ctrl+路径时没有打开端口，此时复制地址到浏览器打开即可</em></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/hexo%E8%BF%90%E8%A1%8C.png"
+                      alt="hexo 运行"
+                ><br>如图则可Ctrl+路径打开浏览器<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/hexo%E6%89%93%E5%BC%80.png"
+                      alt="hexo 打开"
+                ><br>如图则成功打开hexo默认界面,路径为<a class="link"   target="_blank" rel="noopener" href="http://localhost:4000/" >http://localhost:4000/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h4 id="bug2"><a href="#bug2" class="headerlink" title="bug2:"></a>bug2:</h4><p><em>本地打开未设置端口</em><br><em><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/hexo%E9%94%99%E8%AF%AF.png"
+                      alt="hexo 错误"
+                ></em><br><em>该bug为Ctrl+路径时没有打开端口，此时复制地址到浏览器打开即可</em></p>
 <h3 id="hexo相关命令"><a href="#hexo相关命令" class="headerlink" title="hexo相关命令"></a>hexo相关命令</h3><ul>
 <li><strong>hexo clean # 清除缓存文件，建议写完文章后执行一次</strong></li>
 <li><strong>hexo g		# 生成 public 文件夹，写完文章执行</strong></li>
@@ -285,7 +901,7 @@
 <li>suthor ：作者</li>
 <li>其他的根据喜好配置即可，不赘述</li>
 </ul>
-<h3 id="配置博客主题"><a href="#配置博客主题" class="headerlink" title="配置博客主题"></a>配置博客主题</h3><p><a target="_blank" rel="noopener" href="https://hexo.io/themes">hexo官方主题页面</a><br>链接为hexo的官方主题页面 <em>部分主题已不可使用</em></p>
+<h3 id="配置博客主题"><a href="#配置博客主题" class="headerlink" title="配置博客主题"></a>配置博客主题</h3><p><a class="link"   target="_blank" rel="noopener" href="https://hexo.io/themes" >hexo官方主题页面<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>链接为hexo的官方主题页面 <em>部分主题已不可使用</em></p>
 <ol>
 <li><p>点击<code>Visit preview site</code>预览该主题，点击主题名称进入该主题下的github页面</p>
 </li>
@@ -311,13 +927,13 @@
 <li>仓库名必须为 <strong>（用户名）.github.io</strong>，否则可能无法将本地文件上传至GitHub，这个命名方式是 GitHub Pages 的特殊要求，用于识别和部署个人网站或博客。</li>
 <li>仓库为公开仓库</li>
 </ul>
-<h3 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.emai1 <span class="string">&quot;邮箱地址&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.emai1 <span class="string">&quot;邮箱地址&quot;</span></span><br></pre></td></tr></table></figure></div>
 
-<h3 id="配置ssh"><a href="#配置ssh" class="headerlink" title="配置ssh"></a>配置ssh</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -c <span class="string">&quot;邮箱地址&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置ssh"><a href="#配置ssh" class="headerlink" title="配置ssh"></a>配置ssh</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -c <span class="string">&quot;邮箱地址&quot;</span></span><br></pre></td></tr></table></figure></div>
 
 <h4 id="配置git的ssh"><a href="#配置git的ssh" class="headerlink" title="配置git的ssh"></a>配置git的ssh</h4><p>（由于学习linux用了远程，所以需要重新命名ssh防止覆盖上次的密钥）<br><code>ssh-keygen -t rsa -b 4096 -C &quot;1375528118@qq.com&quot; </code><br>-f”D:\Git\liminghao.ssh\custom_key”<br>-t  加密方式<br>-b 生成密钥位数<br>-C 邮箱<br>-f  保存位置<br>中途可以不需要密码，直接按回车</p>
 <h4 id="配置-ssh的config"><a href="#配置-ssh的config" class="headerlink" title="配置.ssh的config"></a>配置.ssh的config</h4><p>只需要另建立一个Host即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host ssh.github.com</span><br><span class="line">  HostName ssh.github.com</span><br><span class="line">  User git</span><br><span class="line">  Port 443</span><br><span class="line">  IdentityFile C:/Users/31401/.ssh/id_github_rsa</span><br><span class="line">  IdentitiesOnly <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host ssh.github.com</span><br><span class="line">  HostName ssh.github.com</span><br><span class="line">  User git</span><br><span class="line">  Port 443</span><br><span class="line">  IdentityFile C:/Users/31401/.ssh/id_github_rsa</span><br><span class="line">  IdentitiesOnly <span class="built_in">yes</span></span><br></pre></td></tr></table></figure></div>
 <p>由于22端口被占用，所以改用443端口</p>
 <h3 id="配置GitHub的ssh"><a href="#配置GitHub的ssh" class="headerlink" title="配置GitHub的ssh"></a>配置GitHub的ssh</h3><ol>
 <li><p>settings-SSH and GPG keys-Kay HSS key</p>
@@ -325,28 +941,30 @@
 <li><p>分别填写Title和id_rsa.pub</p>
 </li>
 <li><p>输入命令验证是否通过</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></li>
+</li>
 </ol>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></div>
+
 <h4 id="bug3"><a href="#bug3" class="headerlink" title="bug3:"></a>bug3:</h4><p><em>ssh端口被占用</em><br><em>ssh: connect to host github.com port 22: Connection refused</em><br><em>该bug为22端口被占用，换为443端口</em></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T -p 443 git@ssh.github.com</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> .git/config</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T -p 443 git@ssh.github.com</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> .git/config</span><br></pre></td></tr></table></figure></div>
 <p>可以检查链接远程的状态(貌似最初忘记初始化git，所以我这里git的所有命令使用不了)</p>
 <h3 id="安装hexo-deployer-git插件"><a href="#安装hexo-deployer-git插件" class="headerlink" title="安装hexo-deployer-git插件"></a>安装hexo-deployer-git插件</h3><p>在刚刚创建的博客文件夹下再次打开<code>open git bash here</code>，安装 <code>hexo-deployer-git</code> 插件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></div>
 
-<h3 id="配置deploy"><a href="#配置deploy" class="headerlink" title="配置deploy"></a>配置deploy</h3><p>打开主界面的<code>_config.yml</code>，在最底下配置deploy<br>deploy:<br>  type: git<br>  repo: <a href="mailto:&#x67;&#105;&#x74;&#x40;&#115;&#x73;&#104;&#46;&#x67;&#105;&#x74;&#104;&#117;&#98;&#46;&#x63;&#x6f;&#109;">&#x67;&#105;&#x74;&#x40;&#115;&#x73;&#104;&#46;&#x67;&#105;&#x74;&#104;&#117;&#98;&#46;&#x63;&#x6f;&#109;</a>:CREATE-MENG&#x2F;create-meng.github.io.git<br>  branch: main</p>
+<h3 id="配置deploy"><a href="#配置deploy" class="headerlink" title="配置deploy"></a>配置deploy</h3><p>打开主界面的<code>_config.yml</code>，在最底下配置deploy<br>deploy:<br>  type: git<br>  repo: <a class="link"   href="mailto:&#x67;&#105;&#x74;&#x40;&#x73;&#x73;&#x68;&#46;&#103;&#105;&#116;&#x68;&#x75;&#98;&#x2e;&#x63;&#111;&#109;" >git@ssh.github.com<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>:CREATE-MENG&#x2F;create-meng.github.io.git<br>  branch: main</p>
 <p><strong>YAML 文件对缩进非常敏感，deploy 下的子项（如 type、repo、branch）必须保持一致的缩进，通常使用两个空格。</strong></p>
 <h3 id="上传静态文件到GitHub"><a href="#上传静态文件到GitHub" class="headerlink" title="上传静态文件到GitHub"></a>上传静态文件到GitHub</h3><p>执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></div>
 
-<p>打开<a target="_blank" rel="noopener" href="https://create-meng.github.io/">你的自建博客网址:https:&#x2F;&#x2F;(用户名).github.io</a><br>即可看到你的自建博客网站</p>
-<h4 id="bug4"><a href="#bug4" class="headerlink" title="bug4:"></a>bug4:</h4><p><em>hexo d运行报错</em><br><em>fatal: unable to access ‘<a target="_blank" rel="noopener" href="https://github.com/create-meng/create-meng.github.io.git/">https://github.com/create-meng/create-meng.github.io.git/</a>‘: SSL peer certificate or SSH remote key was not OK</em><br><em>该bug未配置SSL证书，有以下几个修改方式</em></p>
+<p>打开<a class="link"   target="_blank" rel="noopener" href="https://create-meng.github.io/" >你的自建博客网址:https:&#x2F;&#x2F;(用户名).github.io<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>即可看到你的自建博客网站</p>
+<h4 id="bug4"><a href="#bug4" class="headerlink" title="bug4:"></a>bug4:</h4><p><em>hexo d运行报错</em><br><em>fatal: unable to access ‘<a class="link"   target="_blank" rel="noopener" href="https://github.com/create-meng/create-meng.github.io.git/" >https://github.com/create-meng/create-meng.github.io.git/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>‘: SSL peer certificate or SSH remote key was not OK</em><br><em>该bug未配置SSL证书，有以下几个修改方式</em></p>
 <p><em>1.临时禁用</em></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ssl证书有问题，因此临时禁用  </span></span><br><span class="line">git config --global http.sslVerify <span class="literal">false</span></span><br><span class="line"><span class="comment"># 部署完成后 再启用 </span></span><br><span class="line">git config --global http.sslVerify <span class="literal">true</span></span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ssl证书有问题，因此临时禁用  </span></span><br><span class="line">git config --global http.sslVerify <span class="literal">false</span></span><br><span class="line"><span class="comment"># 部署完成后 再启用 </span></span><br><span class="line">git config --global http.sslVerify <span class="literal">true</span></span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></div>
 <p><em>2.从 <code>cacert.org</code> 下载最新的 CA 证书文件，更新git的SSL证书</em></p>
 <p><em>3.repo为HTML链接，改为SSH链接即可，即上述内容</em></p>
 <h4 id="bug5"><a href="#bug5" class="headerlink" title="bug5:"></a>bug5:</h4><p><em>换行符冲突问题</em><br><em>warning: in the working copy of ‘tag&#x2F;index.html’, LF will be replaced by CRLF the next time Git touches it</em><br><em>该警告为CRLF转换为LF时发出的警告，有以下几种选择</em></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.autocrlf <span class="literal">true</span>  <span class="comment"># 在 Windows 上使用此选项，Git 会将提交的 CRLF 转换为 LF，并在检出时将 LF 转换回 CRLF。（自动转换，选用）</span></span><br><span class="line">git config --global core.autocrlf input  <span class="comment"># 在 Unix/Linux 系统上使用此选项，Git 会将 CRLF 转换为 LF，但检出时保持 LF 不变。</span></span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.autocrlf <span class="literal">true</span>  <span class="comment"># 在 Windows 上使用此选项，Git 会将提交的 CRLF 转换为 LF，并在检出时将 LF 转换回 CRLF。（自动转换，选用）</span></span><br><span class="line">git config --global core.autocrlf input  <span class="comment"># 在 Unix/Linux 系统上使用此选项，Git 会将 CRLF 转换为 LF，但检出时保持 LF 不变。</span></span><br></pre></td></tr></table></figure></div>
 
 <hr>
 <p>2.18日0时38分，结束，明天再来更新绑定域名</p>
@@ -355,171 +973,585 @@
 <hr>
 <h1 id="将域名与GitHub绑定"><a href="#将域名与GitHub绑定" class="headerlink" title="将域名与GitHub绑定"></a>将域名与GitHub绑定</h1><h2 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h2><p>可以在以下购买，也可以使用二级域名，以下价格为最便宜的价格，其他自行查看</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://buy.cloud.tencent.com/domain">腾讯云</a>（.top域名）首年14元，续费32元</li>
-<li><a target="_blank" rel="noopener" href="https://wanwang.aliyun.com/domain?spm=5176.21213303.J_v8LsmxMG6alneH-O7TCPa.2.25062f3dNHdi7J&scm=20140722.S_card@@%E4%BA%A7%E5%93%81@@3417315._.ID_card@@%E4%BA%A7%E5%93%81@@3417315-RL_%E5%9F%9F%E5%90%8D-LOC_search~UND~card~UND~item-OR_ser-PAR1_215041cc17398506878775079ee2f1-V_4-RE_new6-P0_0-P1_0">阿里云</a>（.top域名）首年12元，续费32元</li>
-<li><a target="_blank" rel="noopener" href="https://www.namesilo.com/">namesilo</a>（.sbs域名）首年1.79美元，续费14.95美元</li>
-<li><a target="_blank" rel="noopener" href="https://www.freedns.fun/">二级域名分发</a>免费使用，但可能不太稳定，也可以自行寻找二级域名分发网站<br>(蛐蛐：本来以为国内的域名申请解析都需要备案，后来发现解析到github不需要备案，亏我还找了一堆教程寻找国外不需要备案的域名申请)<br>由于本人傻傻的不清楚，买了namesilo，购买教程<a href="#%E5%89%8D%E8%A8%80">点击跳转到前言第三条</a><br>但由于二级域名也可以，所以建议直接使用免费域名算了，以下将给出namesilo的域名解析到github的教程，二级域名同理</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://buy.cloud.tencent.com/domain" >腾讯云<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>（.top域名）首年14元，续费32元</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://wanwang.aliyun.com/domain?spm=5176.21213303.J_v8LsmxMG6alneH-O7TCPa.2.25062f3dNHdi7J&scm=20140722.S_card@@%E4%BA%A7%E5%93%81@@3417315._.ID_card@@%E4%BA%A7%E5%93%81@@3417315-RL_%E5%9F%9F%E5%90%8D-LOC_search~UND~card~UND~item-OR_ser-PAR1_215041cc17398506878775079ee2f1-V_4-RE_new6-P0_0-P1_0" >阿里云<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>（.top域名）首年12元，续费32元</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.namesilo.com/" >namesilo<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>（.sbs域名）首年1.79美元，续费14.95美元</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.freedns.fun/" >二级域名分发<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>免费使用，但可能不太稳定，也可以自行寻找二级域名分发网站<br>(蛐蛐：本来以为国内的域名申请解析都需要备案，后来发现解析到github不需要备案，亏我还找了一堆教程寻找国外不需要备案的域名申请)<br>由于本人傻傻的不清楚，买了namesilo，购买教程<a href="#%E5%89%8D%E8%A8%80">点击跳转到前言第三条</a><br>但由于二级域名也可以，所以建议直接使用免费域名算了，以下将给出namesilo的域名解析到github的教程，二级域名同理</li>
 </ul>
-<h2 id="将域名解析到-GitHub-Pages"><a href="#将域名解析到-GitHub-Pages" class="headerlink" title="将域名解析到 GitHub Pages"></a>将域名解析到 GitHub Pages</h2><h3 id="配置namesilo"><a href="#配置namesilo" class="headerlink" title="配置namesilo"></a>配置namesilo</h3><p><img src="/images/set-up-my-own-blog/namesilo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%901.png" alt="namesilo域名解析"></p>
+<h2 id="将域名解析到-GitHub-Pages"><a href="#将域名解析到-GitHub-Pages" class="headerlink" title="将域名解析到 GitHub Pages"></a>将域名解析到 GitHub Pages</h2><h3 id="配置namesilo"><a href="#配置namesilo" class="headerlink" title="配置namesilo"></a>配置namesilo</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/namesilo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%901.png"
+                      alt="namesilo域名解析"
+                ></p>
 <ol>
-<li>点击像蓝色球体的标识进入域名解析<br><img src="/images/set-up-my-own-blog/namesilo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%902.png" alt="namesilo域名解析配置"></li>
+<li>点击像蓝色球体的标识进入域名解析<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/namesilo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%902.png"
+                      alt="namesilo域名解析配置"
+                ></li>
 <li>选择<code>Select the resource record type you want to create</code>对应的A和CNAME记录完成以上配置<br>(ps:四个ip地址为github专门用来搭建个人静态博客的网址，CNAME为你的博客网站名，即<code>（用户名）.github.io</code>)</li>
 </ol>
 <h3 id="配置Github"><a href="#配置Github" class="headerlink" title="配置Github"></a>配置Github</h3><ol>
-<li><p>打开你的仓库，上面找到<code>settings</code><br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%901.png" alt="github域名解析"></p>
+<li><p>打开你的仓库，上面找到<code>settings</code><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%901.png"
+                      alt="github域名解析"
+                ></p>
 </li>
-<li><p>下滑找到<code>Pages</code>，将域名输入到图示方框中，并且勾选<code>Enforce HTTPS</code>(github自动为你申请安全证书)<br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%902.png" alt="github域名解析配置"></p>
+<li><p>下滑找到<code>Pages</code>，将域名输入到图示方框中，并且勾选<code>Enforce HTTPS</code>(github自动为你申请安全证书)<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%902.png"
+                      alt="github域名解析配置"
+                ></p>
 </li>
-<li><p>仓库内新建一个文件，名称为<code>CNAME</code>，内容为你的域名<br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%903.png" alt="github域名解析配置CNAME"></p>
+<li><p>仓库内新建一个文件，名称为<code>CNAME</code>，内容为你的域名<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%903.png"
+                      alt="github域名解析配置CNAME"
+                ></p>
 </li>
 </ol>
 <h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
-<li><p>域名解析需要时间，一般30分钟内就好，可以命令行中输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping minghao.sbs <span class="comment">#替换为你的域名</span></span><br></pre></td></tr></table></figure>
+<li>域名解析需要时间，一般30分钟内就好，可以命令行中输入</li>
+</ol>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping minghao.sbs <span class="comment">#替换为你的域名</span></span><br></pre></td></tr></table></figure></div>
 <p>检查是否联通，等联通后就可以使用域名访问你的博客了</p>
-</li>
+<ol start="2">
 <li><p>配置GitHub解析为仓库内的settings，而不是总的settings，鬼知道我在总的settings那里找了多久都没找到</p>
 </li>
 <li><p>bug相关(我印象里遇到了很多问题，也问了ai，但是问题是莫名都消失不见了，就很离谱，仿佛时光莫名消失)</p>
 </li>
 </ol>
-<h4 id="bug6"><a href="#bug6" class="headerlink" title="bug6:"></a>bug6:</h4><p><em>域名无法跳转到博客</em><br><img src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%8A%A5%E9%94%991.png" alt="github域名解析报错1"><br><em>404 Thero isn’t a GitHub Pages site here.</em><br><em>该bug为缺少CNAME文件，请检查仓库内的CNAME未见内容是否拼写错误</em></p>
+<h4 id="bug6"><a href="#bug6" class="headerlink" title="bug6:"></a>bug6:</h4><p><em>域名无法跳转到博客</em><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/github%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%8A%A5%E9%94%991.png"
+                      alt="github域名解析报错1"
+                ><br><em>404 Thero isn’t a GitHub Pages site here.</em><br><em>该bug为缺少CNAME文件，请检查仓库内的CNAME未见内容是否拼写错误</em></p>
 <hr>
 <p>现在是晚上九点，又玩了一下午，（我有罪谢谢），咱土象就是这样又懒又勤奋的，下面进入正文：</p>
 <h1 id="部署博客到云服务器和虚拟主机"><a href="#部署博客到云服务器和虚拟主机" class="headerlink" title="部署博客到云服务器和虚拟主机"></a>部署博客到云服务器和虚拟主机</h1><h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p>由于服务器偏贵，舍不得买，所以买了虚拟主机。另外寻找了一个免费的云服务器，这个csdn上可以自己尝试寻找，不过需要宣传才能一直使用下去，否则只能使用一天，宣传可以加5天使用时间，但是运气很好，浪浪云的抽奖抽到了一个月的香港云服务器，所以本教程本章分为两部分，一是部署到云服务器，二是部署到虚拟主机，但其实两者差别不大，虚拟主机的可操作空间没有云服务器大，但是对于部署个人博客没有什么区别</p>
-<h2 id="部署到云服务器"><a href="#部署到云服务器" class="headerlink" title="部署到云服务器"></a>部署到云服务器</h2><h3 id="配置云服务器"><a href="#配置云服务器" class="headerlink" title="配置云服务器"></a>配置云服务器</h3><p>安装带宝塔系统的系统或者安装好普通系统进入<a target="_blank" rel="noopener" href="https://www.bt.cn/new/download.html">宝塔面板安装中心</a>选择合适的命令远程连接服务器进行安装，安装好后根据指示网址账号密码登录宝塔面板即可，这里使用的是自带宝塔系统的云服务器</p>
+<h2 id="部署到云服务器"><a href="#部署到云服务器" class="headerlink" title="部署到云服务器"></a>部署到云服务器</h2><h3 id="配置云服务器"><a href="#配置云服务器" class="headerlink" title="配置云服务器"></a>配置云服务器</h3><p>安装带宝塔系统的系统或者安装好普通系统进入<a class="link"   target="_blank" rel="noopener" href="https://www.bt.cn/new/download.html" >宝塔面板安装中心<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>选择合适的命令远程连接服务器进行安装，安装好后根据指示网址账号密码登录宝塔面板即可，这里使用的是自带宝塔系统的云服务器</p>
 <ol>
-<li><img src="/images/set-up-my-own-blog/%E8%87%AA%E5%B8%A6%E5%AE%9D%E5%A1%94.png" alt="云服务器宝塔系统"><br>点击设置进入，如图等待系统安装成功</li>
-<li><img src="/images/set-up-my-own-blog/%E4%BF%AE%E6%94%B9%E5%AE%9D%E5%A1%94%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81.png" alt="修改账号密码"><br><img src="/images/set-up-my-own-blog/%E5%AE%9D%E5%A1%94%E7%99%BB%E5%BD%95.png" alt="云服务器宝塔系统"><br>如图可以修改账号密码和登录宝塔系统</li>
+<li><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E8%87%AA%E5%B8%A6%E5%AE%9D%E5%A1%94.png"
+                      alt="云服务器宝塔系统"
+                ><br>点击设置进入，如图等待系统安装成功</li>
+<li><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E4%BF%AE%E6%94%B9%E5%AE%9D%E5%A1%94%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81.png"
+                      alt="修改账号密码"
+                ><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E5%AE%9D%E5%A1%94%E7%99%BB%E5%BD%95.png"
+                      alt="云服务器宝塔系统"
+                ><br>如图可以修改账号密码和登录宝塔系统</li>
 </ol>
 <h3 id="配置宝塔系统"><a href="#配置宝塔系统" class="headerlink" title="配置宝塔系统"></a>配置宝塔系统</h3><ol>
-<li><img src="/images/set-up-my-own-blog/%E7%BB%91%E5%AE%9A%E5%AE%98%E7%BD%91%E8%B4%A6%E5%8F%B7.png" alt="绑定官网账号"><br>如图注册和登录宝塔账号</li>
-<li><img src="/images/set-up-my-own-blog/%E7%99%BB%E9%99%86%E6%88%90%E5%8A%9F.png" alt="登陆成功"><br>如图选择推荐进行安装，等待安装完成</li>
+<li><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E7%BB%91%E5%AE%9A%E5%AE%98%E7%BD%91%E8%B4%A6%E5%8F%B7.png"
+                      alt="绑定官网账号"
+                ><br>如图注册和登录宝塔账号</li>
+<li><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E7%99%BB%E9%99%86%E6%88%90%E5%8A%9F.png"
+                      alt="登陆成功"
+                ><br>如图选择推荐进行安装，等待安装完成</li>
 <li>等待Nginx安装完成后，两种方式</li>
 </ol>
 <ul>
-<li><img src="/images/set-up-my-own-blog/%E7%BD%91%E7%AB%99%E9%85%8D%E7%BD%AE%E6%88%90%E5%8A%9F.png" alt="网站配置成功"></li>
+<li><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E7%BD%91%E7%AB%99%E9%85%8D%E7%BD%AE%E6%88%90%E5%8A%9F.png"
+                      alt="网站配置成功"
+                ></li>
 <li>点击网站，设置自己的域名</li>
-<li><img src="/images/set-up-my-own-blog/%E5%AE%9D%E5%A1%94%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.png" alt="宝塔根目录文件上传"></li>
+<li><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E5%AE%9D%E5%A1%94%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.png"
+                      alt="宝塔根目录文件上传"
+                ></li>
 <li>然后删除所有文件，将myblog下的public文件夹内的内容上传至此即可</li>
 </ul>
 <p>或者使用Docker，但由于需要安装Docker安装一直出问题，所以暂且不管</p>
 <ol start="4">
-<li><img src="/images/set-up-my-own-blog/%E7%BD%91%E9%A1%B5%E5%8A%A0%E8%BD%BD%E6%88%90%E5%8A%9F.png" alt="网页加载成功"><br>如图成功部署博客到云服务器</li>
+<li><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E7%BD%91%E9%A1%B5%E5%8A%A0%E8%BD%BD%E6%88%90%E5%8A%9F.png"
+                      alt="网页加载成功"
+                ><br>如图成功部署博客到云服务器</li>
 </ol>
 <h2 id="部署到虚拟主机"><a href="#部署到虚拟主机" class="headerlink" title="部署到虚拟主机"></a>部署到虚拟主机</h2><h3 id="配置虚拟主机"><a href="#配置虚拟主机" class="headerlink" title="配置虚拟主机"></a>配置虚拟主机</h3><p>虚拟主机操作非常简单，不需要宝塔系统<br>同上</p>
 <ol>
-<li>绑定域名，不过需要审核，可能会要好久<br><img src="/images/set-up-my-own-blog/%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D.png" alt="虚拟主机绑定域名"></li>
-<li>修改文件，不过需要每次重新上传更新<br><img src="/images/set-up-my-own-blog/%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6.png" alt="虚拟主机修改文件"></li>
+<li>绑定域名，不过需要审核，可能会要好久<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D.png"
+                      alt="虚拟主机绑定域名"
+                ></li>
+<li>修改文件，不过需要每次重新上传更新<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/set-up-my-own-blog/%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6.png"
+                      alt="虚拟主机修改文件"
+                ></li>
 </ol>
 <hr>
 <h1 id="新增-设置Tag和Category"><a href="#新增-设置Tag和Category" class="headerlink" title="新增:设置Tag和Category"></a>新增:设置Tag和Category</h1><p>现在是2025.2.21 14:00，经过刚刚的研究发现设置Tag和Category可能会造成一定的困难，Tag和Category操作方式相同，将会放一起讲述。<br>下面有两种可能的情况：</p>
 <ul>
-<li>第一是普遍使用的一种创建tag和category的方式，参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e17711e44e00">创建Tag和Category</a></li>
-<li>第二是主题的特殊形式，将以我使用的主题<a target="_blank" rel="noopener" href="https://github.com/Siricee/hexo-theme-Chic">hexo-theme-Chic</a>为例,参考：<a target="_blank" rel="noopener" href="https://github.com/Siricee/hexo-theme-Chic/blob/master/README-CN.md">创建Tag和Category</a></li>
+<li>第一是普遍使用的一种创建tag和category的方式，参考：<a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/e17711e44e00" >创建Tag和Category<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li>第二是主题的特殊形式，将以我使用的主题<a class="link"   target="_blank" rel="noopener" href="https://github.com/Siricee/hexo-theme-Chic" >hexo-theme-Chic<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>为例,参考：<a class="link"   target="_blank" rel="noopener" href="https://github.com/Siricee/hexo-theme-Chic/blob/master/README-CN.md" >创建Tag和Category<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
 </ul>
-<h2 id="默认情况下的设置方式"><a href="#默认情况下的设置方式" class="headerlink" title="默认情况下的设置方式"></a>默认情况下的设置方式</h2><h3 id="创建Tag和Category文件夹"><a href="#创建Tag和Category文件夹" class="headerlink" title="创建Tag和Category文件夹"></a>创建Tag和Category文件夹</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tag</span><br><span class="line">hexo new page category</span><br></pre></td></tr></table></figure>
+<h2 id="默认情况下的设置方式"><a href="#默认情况下的设置方式" class="headerlink" title="默认情况下的设置方式"></a>默认情况下的设置方式</h2><h3 id="创建Tag和Category文件夹"><a href="#创建Tag和Category文件夹" class="headerlink" title="创建Tag和Category文件夹"></a>创建Tag和Category文件夹</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tag</span><br><span class="line">hexo new page category</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="修改index-html"><a href="#修改index-html" class="headerlink" title="修改index.html"></a>修改index.html</h3><p>修改tag的index.html如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tag</span><br><span class="line"><span class="built_in">date</span>: 2017-05-27 13:47:40</span><br><span class="line"><span class="built_in">type</span>: tag</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tag</span><br><span class="line"><span class="built_in">date</span>: 2017-05-27 13:47:40</span><br><span class="line"><span class="built_in">type</span>: tag</span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
 <p>修改category的index.html如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: category</span><br><span class="line"><span class="built_in">date</span>: 2017-05-27 13:47:40</span><br><span class="line"><span class="built_in">type</span>: categoriy</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: category</span><br><span class="line"><span class="built_in">date</span>: 2017-05-27 13:47:40</span><br><span class="line"><span class="built_in">type</span>: categoriy</span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
 <p>主要修改点在增加<code>type</code></p>
 <h3 id="给文章添加Tag和Category"><a href="#给文章添加Tag和Category" class="headerlink" title="给文章添加Tag和Category"></a>给文章添加Tag和Category</h3><p>例如本文章的文件头如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: <span class="built_in">set</span> up my own blog</span><br><span class="line"><span class="built_in">date</span>: 2025-02-17 20:16:04</span><br><span class="line">tag: </span><br><span class="line">- hexo</span><br><span class="line">- blog</span><br><span class="line">- connect github</span><br><span class="line">category:</span><br><span class="line">- learn new things</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: <span class="built_in">set</span> up my own blog</span><br><span class="line"><span class="built_in">date</span>: 2025-02-17 20:16:04</span><br><span class="line">tag: </span><br><span class="line">- hexo</span><br><span class="line">- blog</span><br><span class="line">- connect github</span><br><span class="line">category:</span><br><span class="line">- learn new things</span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="特定主题情况下的设置方式"><a href="#特定主题情况下的设置方式" class="headerlink" title="特定主题情况下的设置方式"></a>特定主题情况下的设置方式</h2><h3 id="创建Tag和Category文件夹-1"><a href="#创建Tag和Category文件夹-1" class="headerlink" title="创建Tag和Category文件夹"></a>创建Tag和Category文件夹</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tag</span><br><span class="line">hexo new page category</span><br></pre></td></tr></table></figure>
+<h2 id="特定主题情况下的设置方式"><a href="#特定主题情况下的设置方式" class="headerlink" title="特定主题情况下的设置方式"></a>特定主题情况下的设置方式</h2><h3 id="创建Tag和Category文件夹-1"><a href="#创建Tag和Category文件夹-1" class="headerlink" title="创建Tag和Category文件夹"></a>创建Tag和Category文件夹</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tag</span><br><span class="line">hexo new page category</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="修改index-html-1"><a href="#修改index-html-1" class="headerlink" title="修改index.html"></a>修改index.html</h3><p>修改tag的index.html如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tag</span><br><span class="line"><span class="built_in">date</span>: 2017-05-27 13:47:40</span><br><span class="line">layout: tag</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tag</span><br><span class="line"><span class="built_in">date</span>: 2017-05-27 13:47:40</span><br><span class="line">layout: tag</span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
 <p>修改category的index.html如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: category</span><br><span class="line"><span class="built_in">date</span>: 2017-05-27 13:47:40</span><br><span class="line">layout: category</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: category</span><br><span class="line"><span class="built_in">date</span>: 2017-05-27 13:47:40</span><br><span class="line">layout: category</span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
 <p>主要修改点在<code>layout</code>,这与普遍情况下的设置不同</p>
 <h3 id="给文章添加Tag和Category-1"><a href="#给文章添加Tag和Category-1" class="headerlink" title="给文章添加Tag和Category"></a>给文章添加Tag和Category</h3><p>例如本文章的文件头如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: <span class="built_in">set</span> up my own blog</span><br><span class="line"><span class="built_in">date</span>: 2025-02-17 20:16:04</span><br><span class="line">tag: </span><br><span class="line">- hexo</span><br><span class="line">- blog</span><br><span class="line">- connect github</span><br><span class="line">category:</span><br><span class="line">- learn new things</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: <span class="built_in">set</span> up my own blog</span><br><span class="line"><span class="built_in">date</span>: 2025-02-17 20:16:04</span><br><span class="line">tag: </span><br><span class="line">- hexo</span><br><span class="line">- blog</span><br><span class="line">- connect github</span><br><span class="line">category:</span><br><span class="line">- learn new things</span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
 
 <p>至此则完成Tag和Category的设置，运行<code>hexo s</code>进行确认是否配置成功</p>
 <h4 id="bug7"><a href="#bug7" class="headerlink" title="bug7:"></a>bug7:</h4><p><em>点击hexo内链接页面不存在</em><br><em>举个例子，点击”Tags”显示以下内容</em><br><em>404 Thero isn’t a GitHub Pages site here.</em><br><em>该bug为跳转的标签不存在，进入hexo的<code>_config.yml</code>和主题下的<code>_config.yml</code>，查看名称是否相同，重点注意单复数的问题</em></p>
 <hr>
 <h1 id="bug汇总"><a href="#bug汇总" class="headerlink" title="bug汇总"></a>bug汇总</h1><p><a href="#bug1">bug1：博客初始化时不为空文件夹</a><br><a href="#bug2">bug2：本地打开未设置端口</a><br><a href="#bug3">bug3：ssh端口被占用</a><br><a href="#bug4">bug4：上传静态文件运行报错</a><br><a href="#bug5">bug5：换行符冲突问题</a><br><a href="#bug6">bug6：域名无法跳转到博客</a><br><a href="#bug7">bug7：点击hexo内链接页面不存在</a><br><a href="#bug8">bug8：上传内容含有隐私信息</a></p>
-<h4 id="bug8"><a href="#bug8" class="headerlink" title="bug8:"></a>bug8:</h4><p><em>上传内容含有隐私信息</em><br><em>remote:       —— GitHub Personal Access Token ——————————————————————</em><br><em>remote:        locations:</em><br><em>remote:          - commit: d3ab799bd09e7426e2eb94ea4e11775491e47957</em><br><em>remote:            path: 2025&#x2F;02&#x2F;17&#x2F;set-up-my-own-blog&#x2F;index.html:312</em><br><em>remote:</em><br><em>remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.</em><br><em>remote:        <a target="_blank" rel="noopener" href="https://github.com/create-meng/create-meng.github.io/security/secret-scanning/unblock-secret/2tB1TbQackJhMdrxiLg39mQpeWH">https://github.com/create-meng/create-meng.github.io/security/secret-scanning/unblock-secret/2tB1TbQackJhMdrxiLg39mQpeWH</a></em><br><em>该bug为上传信息中含有隐私信息，可通过以下两种方式解决</em><br><em>1.移除敏感信息删除缓存再次提交</em><br><em>2.由于含有缓存，所以可能不能通过，所以打开给的链接，手动通过</em></p>
+<h4 id="bug8"><a href="#bug8" class="headerlink" title="bug8:"></a>bug8:</h4><p><em>上传内容含有隐私信息</em><br><em>remote:       —— GitHub Personal Access Token ——————————————————————</em><br><em>remote:        locations:</em><br><em>remote:          - commit: d3ab799bd09e7426e2eb94ea4e11775491e47957</em><br><em>remote:            path: 2025&#x2F;02&#x2F;17&#x2F;set-up-my-own-blog&#x2F;index.html:312</em><br><em>remote:</em><br><em>remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.</em><br><em>remote:        <a class="link"   target="_blank" rel="noopener" href="https://github.com/create-meng/create-meng.github.io/security/secret-scanning/unblock-secret/2tB1TbQackJhMdrxiLg39mQpeWH" >https://github.com/create-meng/create-meng.github.io/security/secret-scanning/unblock-secret/2tB1TbQackJhMdrxiLg39mQpeWH<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></em><br><em>该bug为上传信息中含有隐私信息，可通过以下两种方式解决</em><br><em>1.移除敏感信息删除缓存再次提交</em><br><em>2.由于含有缓存，所以可能不能通过，所以打开给的链接，手动通过</em></p>
 <hr>
 <p><strong>OK至此所有的关于博客搭建的任务都已经完成了，撒花~</strong></p>
 <hr>
 
-        </div>
+		</div>
 
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> set up my own blog 创建个人博客</li>
+        <li><strong>Author:</strong> create-meng</li>
+        <li><strong>Created at
+                :</strong> 2025-02-17 20:16:04</li>
         
-            <section class="post-copyright">
-                
-                    <p class="copyright-item">
-                        <span>Author:</span>
-                        <span>liminghao</span>
-                    </p>
-                
-                
-                    <p class="copyright-item">
-                        <span>Permalink:</span>
-                        <span><a href="http://example.com/2025/02/17/set-up-my-own-blog/">http://example.com/2025/02/17/set-up-my-own-blog/</a></span>
-                    </p>
-                
-                
-                    <p class="copyright-item">
-                        <span>License:</span>
-                        <span>Copyright (c) 2025 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
-                    </p>
-                
-                
-                     <p class="copyright-item">
-                         <span>Slogan:</span>
-                         <span>Do you believe in <strong>DESTINY</strong>?</span>
-                     </p>
-                
-
-            </section>
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-02-21 19:41:55
+            </li>
         
-        <section class="post-tags">
-            <div>
-                <span>Tag(s):</span>
-                <span class="tag">
-                    
-                    
-                        <a href="/tag/hexo/"># hexo</a>
-                    
-                        <a href="/tag/blog/"># blog</a>
-                    
-                        <a href="/tag/connect-github/"># connect github</a>
-                    
-                        
-                </span>
-            </div>
-            <div>
-                <a href="javascript:window.history.back();">back</a>
-                <span>· </span>
-                <a href="/">home</a>
-            </div>
-        </section>
-        <section class="post-nav">
+        <li>
+            <strong>Link:</strong> https://create-meng.github.io/2025/02/17/set-up-my-own-blog/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
             
-                <a class="prev" rel="prev" href="/2025/02/21/make-dataset-by-labelimg/">make dataset by labelimg 使用labelimg制作数据集</a>
-            
-            
-            <a class="next" rel="next" href="/2025/02/16/new-try-for-writing-the-first-blog-&-how-to-writing-md/">new try for writing the first blog & how to writing md 尝试书写第一个博客及md的书写方式</a>
-            
-        </section>
 
-
-    </article>
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
 </div>
 
-            </div>
-            <footer id="footer" class="footer">
-    <div class="copyright">
-        <span>© liminghao | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
-    </div>
-</footer>
+		</div>
+		
 
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tag/hexo/">#hexo</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tag/blog/">#blog</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tag/connect-github/">#connect github</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2025/02/21/make-dataset-by-labelimg/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">make dataset by labelimg 使用labelimg制作数据集</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2025/02/16/new-try-for-writing-the-first-blog-&amp;-how-to-writing-md/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">new try for writing the first blog &amp; how to writing md 尝试书写第一个博客及md的书写方式</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
     </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">set up my own blog 创建个人博客</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%B3%E8%BD%AC"><span class="nav-text">跳转</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2"><span class="nav-text">搭建博客</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Git%E5%92%8CNode-js"><span class="nav-text">安装Git和Node.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Git"><span class="nav-text">安装Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Node-js"><span class="nav-text">安装Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F"><span class="nav-text">测试是否安装成功</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E8%BF%90%E8%A1%8Chexo"><span class="nav-text">安装和运行hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85hexo"><span class="nav-text">安装hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96myblog"><span class="nav-text">初始化myblog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%8D%9A%E5%AE%A2"><span class="nav-text">运行本地博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-text">hexo相关命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%8D%9A%E5%AE%A2%E7%95%8C%E9%9D%A2"><span class="nav-text">配置博客界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98"><span class="nav-text">配置博客主题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86Hexo%E9%85%8D%E7%BD%AE%E5%88%B0GitHub"><span class="nav-text">将Hexo配置到GitHub</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAgithub%E8%B4%A6%E5%8F%B7"><span class="nav-text">创建github账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E4%BB%93%E5%BA%93"><span class="nav-text">创建新仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEgit"><span class="nav-text">配置git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEssh"><span class="nav-text">配置ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEGitHub%E7%9A%84ssh"><span class="nav-text">配置GitHub的ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85hexo-deployer-git%E6%8F%92%E4%BB%B6"><span class="nav-text">安装hexo-deployer-git插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEdeploy"><span class="nav-text">配置deploy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E5%88%B0GitHub"><span class="nav-text">上传静态文件到GitHub</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86%E5%9F%9F%E5%90%8D%E4%B8%8EGitHub%E7%BB%91%E5%AE%9A"><span class="nav-text">将域名与GitHub绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%AD%E4%B9%B0%E5%9F%9F%E5%90%8D"><span class="nav-text">购买域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E5%88%B0-GitHub-Pages"><span class="nav-text">将域名解析到 GitHub Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEnamesilo"><span class="nav-text">配置namesilo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEGithub"><span class="nav-text">配置Github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">注意事项</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%92%8C%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA"><span class="nav-text">部署博客到云服务器和虚拟主机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A2%8E%E7%A2%8E%E5%BF%B5"><span class="nav-text">碎碎念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">部署到云服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">配置云服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%9D%E5%A1%94%E7%B3%BB%E7%BB%9F"><span class="nav-text">配置宝塔系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA"><span class="nav-text">部署到虚拟主机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA"><span class="nav-text">配置虚拟主机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E-%E8%AE%BE%E7%BD%AETag%E5%92%8CCategory"><span class="nav-text">新增:设置Tag和Category</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%96%B9%E5%BC%8F"><span class="nav-text">默认情况下的设置方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BATag%E5%92%8CCategory%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-text">创建Tag和Category文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9index-html"><span class="nav-text">修改index.html</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%99%E6%96%87%E7%AB%A0%E6%B7%BB%E5%8A%A0Tag%E5%92%8CCategory"><span class="nav-text">给文章添加Tag和Category</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%AE%9A%E4%B8%BB%E9%A2%98%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%96%B9%E5%BC%8F"><span class="nav-text">特定主题情况下的设置方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BATag%E5%92%8CCategory%E6%96%87%E4%BB%B6%E5%A4%B9-1"><span class="nav-text">创建Tag和Category文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9index-html-1"><span class="nav-text">修改index.html</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%99%E6%96%87%E7%AB%A0%E6%B7%BB%E5%8A%A0Tag%E5%92%8CCategory-1"><span class="nav-text">给文章添加Tag和Category</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bug%E6%B1%87%E6%80%BB"><span class="nav-text">bug汇总</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">create-meng</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        8 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
 </body>
 
 </html>
